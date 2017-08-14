@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Library</a></li>
+    <li class="active">Data</li>
+  </ol>
+		<h3>Estufa da {{ mesa.type }} - {{ mesa.name}}</h3>
+		<hr>
+    <div class="jumbotron">
+      <ul class="list-unstyled">
+        <li><b>Sementeira: </b></li>
+        <li><b>Tratamentos: </b>
+          <ul class="list-unstyled">
+            <li></li>
+            <li></li>
+          </ul>
+        <li><b>Tipo:</b></li>
+      </ul>
+    </div>
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}

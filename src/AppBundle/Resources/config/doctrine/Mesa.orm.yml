@@ -1,0 +1,24 @@
+AppBundle\Entity\Mesa:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\MesaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        type:
+            type: string
+            length: 255
+        status:
+            type: integer
+        qrcode:
+            type: string
+            length: 255
+            nullable: true
+    lifecycleCallbacks: {  }

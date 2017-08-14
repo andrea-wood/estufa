@@ -1,0 +1,15 @@
+.mesa {
+	height:100px;
+	background-color: white;
+	margin-bottom:10px;
+	padding:20px;
+}
+.mesa a{
+	color:#333;
+}
+.mesa-produtos{
+	background-color: #f2dede !important;
+}
+.mesa-espera{
+	background-color: #468847 !important;
+}
