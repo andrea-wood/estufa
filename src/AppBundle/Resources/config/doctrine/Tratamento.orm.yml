@@ -1,0 +1,40 @@
+AppBundle\Entity\Tratamento:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\TratamentoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+        days:
+            type: integer
+            nullable: true
+        expiredAt:
+            type: datetime
+        produto_name:
+            type: string
+            length: 255
+        days:
+            type: integer
+            
+    oneToOne:
+        produto:
+            targetEntity: Produto
+            joinColumn:
+                name: produto_id
+                referencedColumnName: id
+    manyToOne:
+        ciclo:
+            targetEntity: Ciclo
+            inversedBy: tratamentos
+            joinColumn:
+                name: ciclo_id
+                referencedColumnName: id
+    lifecycleCallbacks: 
+        prePersist: [ setCreatedAt,setExpiredAt]
+        preUpdate: [  ]

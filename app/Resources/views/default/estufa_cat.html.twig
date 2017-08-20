@@ -1,14 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-		<h3>Estufa da Catarina</h3>
-		<hr>
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        {% for mesa in mesas %}
-        	<div class="row mesa {% if mesa.status == 2 %}mesa-produtos{% endif %} {% if mesa.status == 1 %}mesa-espera{% endif %}">
-        		<a href="{{ path('mesa', {'id': mesa.id, 'type' : mesa.type|lower}) }}"><h3>{{ mesa.name }}</h3></a>
-        	</div>
-    	{% endfor %}
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li class="active">Estufa da Catarina</li>
+    </ol>
+    
+    <div class="content">
+			<h3>Estufa da Catarina</h3>
+			<hr>
+	      <!-- Main component for a primary marketing message or call to action -->
+	      <div class="jumbotron">
+	        {% for mesa in mesas %}
+	        	<div class="row mesa {% if mesa.status == 2 %}mesa-produtos{% endif %} {% if mesa.status == 1 %}mesa-espera{% endif %}">
+	        		<a href="{{ path('mesa', {'id': mesa.id, 'type' : mesa.type|lower}) }}"><h3>{{ mesa.name }}</h3></a>
+	        	</div>
+	    	{% endfor %}
+	      </div>
       </div>
 {% endblock %}
 

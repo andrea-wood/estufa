@@ -8,8 +8,19 @@
 	color:#333;
 }
 .mesa-produtos{
-	background-color: #f2dede !important;
+	background-color: #a94442!important;
 }
 .mesa-espera{
 	background-color: #468847 !important;
+}
+.breadcrumb{
+	top:50px;
+	position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    margin-bottom: 20px;
+}
+.content{
+	margin-top: 120px;
 }

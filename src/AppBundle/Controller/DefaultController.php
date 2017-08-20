@@ -46,12 +46,14 @@ class DefaultController extends Controller
         ->getRepository(Mesa::class)
         ->findOneBy(array("id" => $id, "type" => $type));
    
+
         $form = $this->createForm(MesaType::class, $mesa);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-             $em->flush();
+            $em->flush();
+            return $this->redirect($request->getUri());
         }
          return $this->render('default/mesa.html.twig', array(
             'form' => $form->createView(),

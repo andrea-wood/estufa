@@ -1,29 +1,94 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <ol class="breadcrumb">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Library</a></li>
-    <li class="active">Data</li>
-  </ol>
-		<h3>Estufa da {{ mesa.type }} - {{ mesa.name}}</h3>
-		<hr>
-    <div class="jumbotron">
-      <ul class="list-unstyled">
-        <li><b>Sementeira: </b></li>
-        <li><b>Tratamentos: </b>
-          <ul class="list-unstyled">
-            <li></li>
-            <li></li>
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li><a href="{{ path('estufa_cat') }}">Estufa da {{ mesa.type }}</a></li>
+      <li class="active">{{ mesa.name}}</li>
+    </ol>
+    
+    <div class="content">
+  		<h3>Estufa da {{ mesa.type }} - {{ mesa.name}}</h3>
+  		<hr>
+      {% if mesa.ciclos is not empty %}
+      {% for ciclo in mesa.ciclos %}
+      {% if ciclo.isActive == 0 %}
+      <div class="jumbotron">
+        <ul class="list-unstyled">
+          <li><h3>Tipo: {{ ciclo.type|upper }}</h3></li>
+          <li><h3>Sementeira: {{ ciclo.createdAt|date("d/m/Y", "Europe/Lisbon") }}</h3></li>
+          <li><h3>Tratamentos: </h3>
+          {% if ciclo.tratamentos is not empty %}
+            <ul class="list-unstyled">
+              
+              {% for tratamento in ciclo.tratamentos %}
+              <li>{{ tratamento.produto_name }} - {{ tratamento.createdAt|date("d/m/Y", "Europe/Lisbon") }}</li>
+              {% endfor %}
+              
+            </ul>
+           {% endif %}
+        </ul>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+      <h3>Actiones:</h3>
+      {{ form_start(form) }}
+      {{ form_widget(form) }}
+      <div class="form-group"><button type="submit" class="save btn">Save</button></div>
+      {{ form_end(form) }}
+      </div>
+      {% if mesa.ciclos is not empty %}
+
+      <div class="jumbotron">
+          <h3>Velhos Ciclos:</h3>
+          <ul>
+            {% for ciclo in mesa.ciclos %}
+                {% if ciclo.isActive == 0 %}
+                <li>{{ ciclo.type }} ( {{ ciclo.createdAt|date("d/m/Y", "Europe/Paris") }} )</li>
+                {% endif %}
+            {% endfor %}
           </ul>
-        <li><b>Tipo:</b></li>
-      </ul>
+      </div>
+      {% endif %}
     </div>
-    <!-- Main component for a primary marketing message or call to action -->
-    <div class="jumbotron">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-    </div>
+
+   <script>
+    var $collectionHolder;
+
+    var $addTratamentoLink = $('<a href="#" class="add_tratamento_link">Adicionar um tratamento</a>');
+    var $newLinkLi = $('<li></li>').append($addTratamentoLink);
+    $(document).ready(function() {
+
+
+
+        $collectionHolder = $('#appbundle_mesa_ciclo_tratamentos');
+       
+        $collectionHolder.append($newLinkLi);
+
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+        $addTratamentoLink.on('click', function(e) {
+            e.preventDefault();
+
+            addTratamentoForm($collectionHolder, $newLinkLi);
+        });
+    });
+    function addTratamentoForm($collectionHolder, $newLinkLi) {
+    var prototype = $collectionHolder.data('prototype');
+
+    var index = $collectionHolder.data('index');
+
+    var newForm = prototype.replace(/__name__/g, index);
+
+    $collectionHolder.data('index', index + 1);
+
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+}
+    </script>
+
 
 {% endblock %}
 
@@ -32,3 +97,4 @@
 
 </style>
 {% endblock %}
+

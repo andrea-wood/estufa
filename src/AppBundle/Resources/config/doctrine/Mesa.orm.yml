@@ -21,4 +21,9 @@ AppBundle\Entity\Mesa:
             type: string
             length: 255
             nullable: true
+    oneToMany:
+        ciclos:
+            targetEntity: Ciclo
+            mappedBy: mesa
+            cascade:      [persist]
     lifecycleCallbacks: {  }

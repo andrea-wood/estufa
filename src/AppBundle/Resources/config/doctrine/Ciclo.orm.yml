@@ -1,0 +1,37 @@
+AppBundle\Entity\Ciclo:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\CicloRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+        type:
+            type: string
+            length: 255
+        isActive:
+            type: boolean
+            options:
+                default: 1
+    oneToMany:
+        tratamentos:
+            targetEntity: Tratamento
+            mappedBy: ciclo
+            cascade:      [persist]
+    manyToOne:
+        mesa:
+            targetEntity: Mesa
+            inversedBy: ciclos
+            joinColumn:
+                name: mesa_id
+                referencedColumnName: id
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAt,setUpdatedAt]
+        preUpdate: [ setUpdatedAt ]

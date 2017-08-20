@@ -3,21 +3,21 @@
 {% block body %}
 
 
-
+    <div class="content">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
             <div class="row">
-                  <div class="col-xs-6 text-center">
+                  <div class="col-md-6 text-center" style="margin-bottom:20px;">
                         <a href="{{ path('estufa_ana') }}" ><span class="glyphicon glyphicon-home" style="font-size:50px;" aria-hidden="true"></span></a>
                         <h3>Ana</h3>
                     </div>
-                  <div class="col-xs-6 text-center">
+                  <div class="col-md-6 text-center" style="margin-bottom:20px;">
                     <a href="{{ path('estufa_cat') }}" ><span class="glyphicon glyphicon-home" style="font-size:50px;" aria-hidden="true"></span></a>
                     <h3>Catarina</h3>
                     </div>
                 </div>
       </div>
-
+</div>
 {% endblock %}
 
 {% block stylesheets %}

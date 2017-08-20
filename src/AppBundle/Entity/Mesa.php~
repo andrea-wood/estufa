@@ -138,4 +138,82 @@ class Mesa
     {
         return $this->status;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $ciclos;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ciclos = new \Doctrine\Common\Collections\ArrayCollection();
+         $this->past_ciclos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ciclo
+     *
+     * @param \AppBundle\Entity\Ciclo $ciclo
+     *
+     * @return Mesa
+     */
+    public function addCiclo(\AppBundle\Entity\Ciclo $ciclo)
+    {
+        $ciclo->setMesa($this); 
+
+        $this->ciclos[] = $ciclo;
+
+        return $this;
+    }
+
+    /**
+     * Remove ciclo
+     *
+     * @param \AppBundle\Entity\Ciclo $ciclo
+     */
+    public function removeCiclo(\AppBundle\Entity\Ciclo $ciclo)
+    {
+        $this->ciclos->removeElement($ciclo);
+    }
+
+    /**
+     * Get ciclos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCiclos()
+    {
+        return $this->ciclos;
+    }
+
+    public function addPastCiclo(\AppBundle\Entity\Ciclo $ciclo)
+    {
+
+        $this->past_ciclos[] = $ciclo;
+
+        return $this;
+    }
+
+    public function getPastCiclos()
+    {
+        return $this->past_ciclos;
+    }
+
+    protected $ciclo;
+
+    public function getCiclo()
+    {
+        return $this->ciclo;
+    }
+
+    public function setCiclo(\AppBundle\Entity\Ciclo $ciclo = null)
+    {
+        $ciclo->setMesa($this);
+
+        $this->ciclo = $ciclo;
+
+        return $this;
+    }
 }
