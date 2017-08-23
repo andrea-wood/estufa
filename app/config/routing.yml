@@ -1,6 +1,28 @@
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+# Disable rest, profile, register
+fos_user_registration:
+    path: /register
+    defaults: { _controller: "FOSUserBundle:Security:login" }
+    
+fos_user_resetting:
+    path: /resetting
+    defaults: { _controller: "FOSUserBundle:Security:login" }
 
+fos_user_password:
+    path: /profile
+    defaults: { _controller: "FOSUserBundle:Security:login" }
+
+fos_user_security_login:
+    path: /login
+    defaults: { _controller: "FOSUserBundle:Security:login" }
+
+fos_user_security_check:
+    path: /login_check
+    defaults: { _controller: "FOSUserBundle:Security:loginCheck"}
+
+fos_user_security_logout:
+    path: /logout
+    defaults: { _controller: "FOSUserBundle:Security:logout"}
+    
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
@@ -29,5 +51,4 @@ add_produto:
     path: /produto/add
     defaults:  { _controller: AppBundle:Default:addProduto }
 
-logout:
-    path: /logout
+
