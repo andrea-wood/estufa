@@ -31,9 +31,10 @@ Here's a brief intro about what a developer must do in order to start developing
 the project further:
 
 ```shell
-git clone https://github.com/your/your-project.git
-cd your-project/
-packagemanager install
+git clone https://github.com/andrea-wood/estufa.git
+cd estufa/
+php bin/symfony_requirements
+composer install --no-dev --optimize-autoloader
 ```
 
 And state what happens step-by-step. If there is any virtual environment, local server or database feeder needed, explain here.
@@ -44,9 +45,9 @@ If your project needs some additional steps for the developer to build the
 project after some code changes, state them here. for example:
 
 ```shell
-./configure
-make
-make install
+php bin/console cache:clear --env=prod --no-debug --no-warmup
+php bin/console cache:warmup --env=prod
+php bin/console assetic:dump --env=prod --no-debug
 ```
 
 Here again you should state what actually happens when the code above gets
