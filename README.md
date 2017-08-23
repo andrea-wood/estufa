@@ -1,6 +1,6 @@
-![Logo of the project](./img/web/logo.png)
+![Logo of the project](./web/img/logo.png)
 
-# Estufa Quinta S. Antonio
+# Estufas App Quinta S. Antonio
 > Additional information or tag line
 
 A brief description of your project, what it is used for.
