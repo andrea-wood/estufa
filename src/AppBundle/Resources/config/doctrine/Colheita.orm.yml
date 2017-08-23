@@ -1,7 +1,7 @@
-AppBundle\Entity\Tratamento:
+AppBundle\Entity\Colheita:
     type: entity
     table: null
-    repositoryClass: AppBundle\Repository\TratamentoRepository
+    repositoryClass: AppBundle\Repository\ColheitaRepository
     id:
         id:
             type: integer
@@ -10,17 +10,13 @@ AppBundle\Entity\Tratamento:
                 strategy: AUTO
     fields:
         createdAt:
-            type: datetime        
+            type: datetime
+        kg:
+            type: integer
     manyToOne:
-        produto:
-            targetEntity: Produto
-            cascade:      [persist]
-            joinColumn:
-                name: produto_id
-                referencedColumnName: id
         ciclo:
             targetEntity: Ciclo
-            inversedBy: tratamentos
+            inversedBy: colheitas
             joinColumn:
                 name: ciclo_id
                 referencedColumnName: id

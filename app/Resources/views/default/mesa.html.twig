@@ -11,22 +11,38 @@
   		<hr>
       {% if mesa.ciclos is not empty %}
       {% for ciclo in mesa.ciclos %}
-      {% if ciclo.isActive == 0 %}
+      {% if ciclo.isActive  %}
       <div class="jumbotron">
         <ul class="list-unstyled">
           <li><h3>Tipo: {{ ciclo.type|upper }}</h3></li>
           <li><h3>Sementeira: {{ ciclo.createdAt|date("d/m/Y", "Europe/Lisbon") }}</h3></li>
+          <li role="separator" class="divider"></li>
           <li><h3>Tratamentos: </h3>
-          {% if ciclo.tratamentos is not empty %}
-            <ul class="list-unstyled">
-              
+            {% if ciclo.tratamentos is not empty %}
+            <ul>
               {% for tratamento in ciclo.tratamentos %}
-              <li>{{ tratamento.produto_name }} - {{ tratamento.createdAt|date("d/m/Y", "Europe/Lisbon") }}</li>
+              <li {% if "now"|date('Y-m-d') <= tratamento.getExpirationDate()|date('Y-m-d') %}class="text-danger"{% else %}class="text-success"{% endif %}>
+                <b>{{ tratamento.produto.name }}</b>  ( Creação : {{ tratamento.createdAt|date("d/m/Y", "Europe/Lisbon") }} / Expiração : {{tratamento.getExpirationDate()|date("d/m/Y", "Europe/Lisbon")}} )
+                }
+              </li>
               {% endfor %}
-              
             </ul>
            {% endif %}
+           </li>
+           <li role="separator" class="divider"></li>
+          <li><h3>Colheitas: </h3>
+            {% if ciclo.colheitas is not empty %}
+            <ul>
+              {% for colheita in ciclo.colheitas %}
+              <li>
+                <b>{{ colheita.kg }} Quilos</b>  ( {{ colheita.createdAt|date("d/m/Y", "Europe/Lisbon") }} )
+              </li>
+              {% endfor %}
+            </ul>
+           {% endif %}
+           </li>
         </ul>
+
       </div>
       {% endif %}
       {% endfor %}
@@ -36,8 +52,7 @@
       <h3>Actiones:</h3>
       {{ form_start(form) }}
       {{ form_widget(form) }}
-      <div class="form-group"><button type="submit" class="save btn">Save</button></div>
-      {{ form_end(form) }}
+      {{ form_rest(form) }}
       </div>
       {% if mesa.ciclos is not empty %}
 
@@ -55,38 +70,82 @@
     </div>
 
    <script>
-    var $collectionHolder;
+    var $collectionHolderTratamentos;
 
-    var $addTratamentoLink = $('<a href="#" class="add_tratamento_link">Adicionar um tratamento</a>');
-    var $newLinkLi = $('<li></li>').append($addTratamentoLink);
+    var $collectionHolderColheitas;
+
+    var $addTratamentoLink = $('<button type="button" class="btn btn-primary add_tratamento_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um tratamento</button>');
+
+    var $addColheitaLink = $('<button type="button" class="btn btn-primary add_colheita_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma colheita</button>');
+
+    var $newTratamentoLinkLi = $addTratamentoLink;
+
+     var $newColheitaLinkLi = $addColheitaLink;
+
     $(document).ready(function() {
 
+          $collectionHolderTratamentos = $('#appbundle_mesa_ciclo_tratamentos');
+         
+          $collectionHolderTratamentos.append($newTratamentoLinkLi);
+
+          $collectionHolderTratamentos.data('index', $collectionHolderTratamentos.find(':input').length);
+
+          $addTratamentoLink.on('click', function(e) {
+
+              e.preventDefault();
+
+              addTratamentoForm($collectionHolderTratamentos, $newTratamentoLinkLi);
+
+          });
+
+          $collectionHolderColheitas = $('#appbundle_mesa_ciclo_colheitas');
+         
+          $collectionHolderColheitas.append($newColheitaLinkLi);
+
+          $collectionHolderColheitas.data('index', $collectionHolderColheitas.find(':input').length);
+
+          $addColheitaLink.on('click', function(e) {
+
+              e.preventDefault();
+
+              addColheitaForm($collectionHolderColheitas, $newColheitaLinkLi);
+              
+          });
+      });
+
+      function addTratamentoForm($collectionHolderTratamentos, $newTratamentoLinkLi) {
+
+        var prototype = $collectionHolderTratamentos.data('prototype');
+
+        var index = $collectionHolderTratamentos.data('index');
+
+        var newForm = prototype.replace(/__name__/g, index);
+
+        $collectionHolderTratamentos.data('index', index + 1);
+
+        var $newFormLi = $('<li></li>').append(newForm);
+
+        $newTratamentoLinkLi.before($newFormLi);
+
+      }
 
 
-        $collectionHolder = $('#appbundle_mesa_ciclo_tratamentos');
-       
-        $collectionHolder.append($newLinkLi);
+      function addColheitaForm($collectionHolderColheitas, $newColheitaLinkLi) {
 
-        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+        var prototype = $collectionHolderColheitas.data('prototype');
 
-        $addTratamentoLink.on('click', function(e) {
-            e.preventDefault();
+        var index = $collectionHolderColheitas.data('index');
 
-            addTratamentoForm($collectionHolder, $newLinkLi);
-        });
-    });
-    function addTratamentoForm($collectionHolder, $newLinkLi) {
-    var prototype = $collectionHolder.data('prototype');
+        var newForm = prototype.replace(/__name__/g, index);
 
-    var index = $collectionHolder.data('index');
+        $collectionHolderColheitas.data('index', index + 1);
 
-    var newForm = prototype.replace(/__name__/g, index);
+        var $newFormLi = $('<li></li>').append(newForm);
 
-    $collectionHolder.data('index', index + 1);
+        $newColheitaLinkLi.before($newFormLi);
 
-    var $newFormLi = $('<li></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-}
+      }
+
     </script>
 
 

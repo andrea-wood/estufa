@@ -8,7 +8,7 @@ namespace AppBundle\Entity;
 class Ciclo
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -27,11 +27,33 @@ class Ciclo
      */
     private $type;
 
+    /**
+     * @var boolean
+     */
+    private $isActive = 1;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tratamentos;
+
+    /**
+     * @var \AppBundle\Entity\Mesa
+     */
+    private $mesa;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tratamentos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -109,17 +131,29 @@ class Ciclo
     {
         return $this->type;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $tratamentos;
 
     /**
-     * Constructor
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Ciclo
      */
-    public function __construct()
+    public function setIsActive($isActive)
     {
-        $this->tratamentos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 
     /**
@@ -132,7 +166,7 @@ class Ciclo
     public function addTratamento(\AppBundle\Entity\Tratamento $tratamento)
     {
         $tratamento->setCiclo($this);
-
+        
         $this->tratamentos[] = $tratamento;
 
         return $this;
@@ -157,11 +191,6 @@ class Ciclo
     {
         return $this->tratamentos;
     }
-    /**
-     * @var \AppBundle\Entity\Mesa
-     */
-    private $mesa;
-
 
     /**
      * Set mesa
@@ -187,32 +216,44 @@ class Ciclo
         return $this->mesa;
     }
     /**
-     * @var boolean
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $isActive = 1;
+    private $colheitas;
 
 
     /**
-     * Set isActive
+     * Add colheita
      *
-     * @param boolean $isActive
+     * @param \AppBundle\Entity\Colheita $colheita
      *
      * @return Ciclo
      */
-    public function setIsActive($isActive)
+    public function addColheita(\AppBundle\Entity\Colheita $colheita)
     {
-        $this->isActive = $isActive;
+        $colheita->setCiclo($this);
+        
+        $this->colheitas[] = $colheita;
 
         return $this;
     }
 
     /**
-     * Get isActive
+     * Remove colheita
      *
-     * @return boolean
+     * @param \AppBundle\Entity\Colheita $colheita
      */
-    public function getIsActive()
+    public function removeColheita(\AppBundle\Entity\Colheita $colheita)
     {
-        return $this->isActive;
+        $this->colheitas->removeElement($colheita);
+    }
+
+    /**
+     * Get colheitas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getColheitas()
+    {
+        return $this->colheitas;
     }
 }

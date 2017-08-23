@@ -8,7 +8,7 @@ namespace AppBundle\Entity;
 class Tratamento
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -18,7 +18,7 @@ class Tratamento
     private $createdAt;
 
     /**
-     * @var int
+     * @var integer
      */
     private $days;
 
@@ -27,11 +27,21 @@ class Tratamento
      */
     private $expiredAt;
 
+    /**
+     * @var string
+     */
+    private $produto_name;
+
+    /**
+     * @var \AppBundle\Entity\Produto
+     */
+    private $produto;
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -47,7 +57,7 @@ class Tratamento
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt =  (new \DateTime());
+        $this->createdAt = (new \DateTime());
 
         return $this;
     }
@@ -58,7 +68,7 @@ class Tratamento
      * @return \DateTime
      */
     public function getCreatedAt()
-    {
+    {   
         return $this->createdAt;
     }
 
@@ -79,7 +89,7 @@ class Tratamento
     /**
      * Get days
      *
-     * @return int
+     * @return integer
      */
     public function getDays()
     {
@@ -95,7 +105,8 @@ class Tratamento
      */
     public function setExpiredAt($expiredAt)
     {
-        $this->expiredAt =  (new \DateTime());
+       
+        $this->expiredAt = $expiredAt;
 
         return $this;
     }
@@ -107,7 +118,56 @@ class Tratamento
      */
     public function getExpiredAt()
     {
+
         return $this->expiredAt;
+    }
+
+    /**
+     * Set produtoName
+     *
+     * @param string $produtoName
+     *
+     * @return Tratamento
+     */
+    public function setProdutoName($produtoName)
+    {
+        $this->produto_name = $produtoName;
+
+        return $this;
+    }
+
+    /**
+     * Get produtoName
+     *
+     * @return string
+     */
+    public function getProdutoName()
+    {
+        return $this->produto_name;
+    }
+
+    /**
+     * Set produto
+     *
+     * @param \AppBundle\Entity\Produto $produto
+     *
+     * @return Tratamento
+     */
+    public function setProduto(\AppBundle\Entity\Produto $produto = null)
+    {
+        $this->produto = $produto;
+
+        return $this;
+    }
+
+    /**
+     * Get produto
+     *
+     * @return \AppBundle\Entity\Produto
+     */
+    public function getProduto()
+    {
+        return $this->produto;
     }
     /**
      * @var \AppBundle\Entity\Ciclo
@@ -138,62 +198,28 @@ class Tratamento
     {
         return $this->ciclo;
     }
-    /**
-     * @var \AppBundle\Entity\Produto
-     */
-    private $produto;
 
-
-    /**
-     * Set produto
-     *
-     * @param \AppBundle\Entity\Produto $produto
-     *
-     * @return Tratamento
-     */
-    public function setProduto(\AppBundle\Entity\Produto $produto = null)
+    public function getExpirationDate()
     {
-        $this->produto = $produto;
+        $interval = 'P'. strval($this->getProduto()->getDays()) .'D';
+        
+        $cloneDate = clone $this->createdAt;
 
-        return $this;
+        return $cloneDate->add((new \DateInterval($interval)));
+
     }
 
-    /**
-     * Get produto
-     *
-     * @return \AppBundle\Entity\Produto
-     */
-    public function getProduto()
+    public function diffExpirationDate()
     {
-        return $this->produto;
-    }
-    /**
-     * @var string
-     */
-    private $produto_name;
+        $now = (new \DateTime());
 
+        $interval = 'P'. strval($this->getProduto()->getDays()) .'D';
+        
+        $cloneDate = clone $this->createdAt;
 
-    /**
-     * Set produtoName
-     *
-     * @param string $produtoName
-     *
-     * @return Tratamento
-     */
-    public function setProdutoName($produtoName)
-    {
-        $this->produto_name = $produtoName;
+        $expirationDate = $cloneDate->add((new \DateInterval($interval)));
 
-        return $this;
-    }
+        return  $expirationDate->diff($now);
 
-    /**
-     * Get produtoName
-     *
-     * @return string
-     */
-    public function getProdutoName()
-    {
-        return $this->produto_name;
     }
 }

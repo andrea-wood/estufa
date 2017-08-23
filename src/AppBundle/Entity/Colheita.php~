@@ -1,0 +1,84 @@
+<?php
+
+namespace AppBundle\Entity;
+
+/**
+ * Colheita
+ */
+class Colheita
+{
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var int
+     */
+    private $kg;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Colheita
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set kg
+     *
+     * @param integer $kg
+     *
+     * @return Colheita
+     */
+    public function setKg($kg)
+    {
+        $this->kg = $kg;
+
+        return $this;
+    }
+
+    /**
+     * Get kg
+     *
+     * @return int
+     */
+    public function getKg()
+    {
+        return $this->kg;
+    }
+}
+

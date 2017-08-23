@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use AppBundle\Form\CicloType;
 use Doctrine\ORM\EntityRepository;
@@ -41,34 +42,22 @@ class MesaType extends AbstractType
 
         });
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $mesa = $event->getData();
                 
             $form = $event->getForm();
-     
+            
         });
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
             $mesa = $event->getData();
-                
+            
             $form = $event->getForm();
 
-            if(null !== $mesa->getCiclo() && 0 === $mesa->getStatus()){
+            if (null !== $mesa->getCiclo() && 0 === $mesa->getStatus()){
                 $mesa->addCiclo($mesa->getCiclo());
                 $mesa->setStatus(1);
-
-            } else {
-
-                foreach($mesa->getCiclos() as $ciclo){
-                    if($ciclo->getIsActive()){
-
-                        foreach($ciclo->getTratamentos() as $tratamento){
-                            $tratamento->setProdutoName($tratamento->getProduto()->getName());
-
-                        }
-                    }
-
-                }
+               
             }
 
         });
@@ -77,11 +66,7 @@ class MesaType extends AbstractType
             $mesa = $event->getData();
                 
             $form = $event->getForm();
-            foreach($mesa->getCiclos() as $ciclo){
-                    if($ciclo->getIsActive()){
-                        $mesa->setCiclo($ciclo);
-                    }
-            }
+
         });
                
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
@@ -89,9 +74,10 @@ class MesaType extends AbstractType
                 
             $form = $event->getForm();
 
-            if($mesa->getStatus() === 0){
+            if(null === $mesa->getCiclo() &&  $mesa->getStatus() === 0){
                 $form         
-                ->add('ciclo', CicloType::class, array('label' => 'Adicionar um ciclo'));
+                ->add('ciclo', CicloType::class, array('label' => 'Adicionar um ciclo'))
+                ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'));
             } else {
 
                 $form
@@ -104,12 +90,22 @@ class MesaType extends AbstractType
                     ),
                 ));
 
-                if($mesa->getStatus() === 2){
+                if($mesa->getStatus() === 1){
+
+                    $form
+                    ->add('ciclo', CicloColheitasType::class, array('label' => 'Colheitas'));
+
+
+                } elseif($mesa->getStatus() === 2){
+
                     $form
                     ->add('ciclo', CicloTratamentosType::class, array('label' => 'Tratamentos'));
+
                 }
                 
+                $form->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'));
 
+                $form->add('close', SubmitType::class, array('attr' => array('class' => 'btn-danger'), 'label' => 'Acabar o ciclo'));
             }
         });
 

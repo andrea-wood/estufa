@@ -21,6 +21,10 @@ AppBundle\Entity\Ciclo:
             options:
                 default: 1
     oneToMany:
+        colheitas:
+            targetEntity: Colheita
+            mappedBy: ciclo
+            cascade:      [persist]
         tratamentos:
             targetEntity: Tratamento
             mappedBy: ciclo

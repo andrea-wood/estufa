@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li class="active">Produtos</li>
+    </ol>
+    
+    <div class="content">
+  		<h3>Produtos</h3>
+  		<hr>
+      {% if produtos is not empty %}
+      
+
+      <div class="jumbotron">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nome do produto</th><th>Dias de espera</th><th>Ultima atualização</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for produto in produtos %}
+              <tr>
+                <td><span class="glyphicon glyphicon-oil" aria-hidden="true"></span> <a href="{{ path('produto', {'id': produto.id }) }}" >{{ produto.name }}</a></td>
+                <td>{{ produto.days }}</td>
+                <td>{{ produto.updatedAt|date("d/m/Y - H:i", "Europe/Lisbon") }}</td>
+              </tr> 
+            {% endfor %}
+          </tbody>
+        </table>
+        <a href="{{ path('add_produto') }}" role="button" class="btn btn-primary add_produto_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um produto</a>
+      </div>
+ 
+      
+      {% endif %}
+    </div>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}
+

@@ -1,7 +1,7 @@
-chown -R admin:http var/cache/
-chmod -R 775 var/cache/
-chown -R admin:http var/sessions/
-chmod -R 775 var/sessions/
-chown -R admin:http var/logs/
-chmod -R 775 var/logs/
+sudo chown -R admin:http var/cache/
+sudo chmod 775 -R var/cache/
+sudo chown -R http:http var/sessions/
+sudo chmod 775 -R var/sessions/
+sudo chown -R admin:http var/logs/
+sudo chmod 775 -R var/logs/
 

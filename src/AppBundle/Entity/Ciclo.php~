@@ -8,7 +8,7 @@ namespace AppBundle\Entity;
 class Ciclo
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -27,11 +27,33 @@ class Ciclo
      */
     private $type;
 
+    /**
+     * @var boolean
+     */
+    private $isActive = 1;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tratamentos;
+
+    /**
+     * @var \AppBundle\Entity\Mesa
+     */
+    private $mesa;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tratamentos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -109,17 +131,29 @@ class Ciclo
     {
         return $this->type;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $tratamentos;
 
     /**
-     * Constructor
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Ciclo
      */
-    public function __construct()
+    public function setIsActive($isActive)
     {
-        $this->tratamentos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 
     /**
@@ -132,7 +166,7 @@ class Ciclo
     public function addTratamento(\AppBundle\Entity\Tratamento $tratamento)
     {
         $tratamento->setCiclo($this);
-
+        
         $this->tratamentos[] = $tratamento;
 
         return $this;
@@ -157,11 +191,6 @@ class Ciclo
     {
         return $this->tratamentos;
     }
-    /**
-     * @var \AppBundle\Entity\Mesa
-     */
-    private $mesa;
-
 
     /**
      * Set mesa
@@ -185,34 +214,5 @@ class Ciclo
     public function getMesa()
     {
         return $this->mesa;
-    }
-    /**
-     * @var boolean
-     */
-    private $isActive = 1;
-
-
-    /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     *
-     * @return Ciclo
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
-     * Get isActive
-     *
-     * @return boolean
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
     }
 }

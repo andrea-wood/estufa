@@ -12,5 +12,11 @@ AppBundle\Entity\Produto:
         name:
             type: string
             length: 255
-
-    lifecycleCallbacks: {  }
+            unique: true
+        days:
+            type: integer
+        updatedAt:
+            type: datetime
+    lifecycleCallbacks: 
+        prePersist: [ setUpdatedAt]
+        preUpdate: [ setUpdatedAt ]
