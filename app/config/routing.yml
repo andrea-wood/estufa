@@ -27,16 +27,12 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
-estufa_ana:
-    path: /estufa/ana 
-    defaults:  { _controller: AppBundle:Default:estufaAna }
-
-estufa_cat:
-    path: /estufa/catarina
-    defaults:  { _controller: AppBundle:Default:estufaCat }
+estufa:
+    path: /estufa/{type}
+    defaults:  { _controller: AppBundle:Default:estufa }
 
 mesa:
-    path: /estufa/{type}/mesa/{id}
+    path: /estufa/{type}/mesas/{id}
     defaults:  { _controller: AppBundle:Default:mesa }
 
 produtos:
@@ -51,4 +47,10 @@ add_produto:
     path: /produto/add
     defaults:  { _controller: AppBundle:Default:addProduto }
 
+export_mesas:
+    path: /mesas/export
+    defaults:  { _controller: AppBundle:Default:export }
 
+print_ciclo:
+    path: /ciclos/print/{id}
+    defaults:  { _controller: AppBundle:Default:print }

@@ -25,20 +25,8 @@ class MesaType extends AbstractType
 
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+
             $mesa = $event->getData();
-           
-
-            if($mesa->getStatus() === 0){
-
-                foreach($mesa->getCiclos() as $ciclo){
-
-                    if($ciclo->getIsActive()){
-                        $ciclo->setIsActive(false);
-                    }
-
-                }  
-
-            }
 
         });
 
@@ -54,12 +42,6 @@ class MesaType extends AbstractType
             
             $form = $event->getForm();
 
-            if (null !== $mesa->getCiclo() && 0 === $mesa->getStatus()){
-                $mesa->addCiclo($mesa->getCiclo());
-                $mesa->setStatus(1);
-               
-            }
-
         });
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -74,10 +56,12 @@ class MesaType extends AbstractType
                 
             $form = $event->getForm();
 
-            if(null === $mesa->getCiclo() &&  $mesa->getStatus() === 0){
+            if(null === $mesa->getCiclo()){
+
                 $form         
                 ->add('ciclo', CicloType::class, array('label' => 'Adicionar um ciclo'))
-                ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'));
+                ->add('create', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Criar'));
+
             } else {
 
                 $form
@@ -105,7 +89,7 @@ class MesaType extends AbstractType
                 
                 $form->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'));
 
-                $form->add('close', SubmitType::class, array('attr' => array('class' => 'btn-danger'), 'label' => 'Acabar o ciclo'));
+                $form->add('close', SubmitType::class, array('attr' => array('class' => 'btn-danger', 'data-toggle' => 'modal', 'data-target' => '#modalCheck'), 'label' => 'Acabar o ciclo'));
             }
         });
 

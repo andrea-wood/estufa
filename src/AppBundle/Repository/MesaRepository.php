@@ -10,4 +10,5 @@ namespace AppBundle\Repository;
  */
 class MesaRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

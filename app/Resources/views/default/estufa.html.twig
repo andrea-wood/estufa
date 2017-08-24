@@ -2,11 +2,11 @@
 {% block body %}
     <ol class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Home</a></li>
-      <li class="active">Estufa da Catarina</li>
+      <li class="active">Estufa da {{ type|capitalize  }}</li>
     </ol>
     
     <div class="content">
-			<h3>Estufa da Catarina</h3>
+			<h3>Estufa da {{ type|capitalize  }}</h3>
 			<hr>
 	      <!-- Main component for a primary marketing message or call to action -->
 	      <div class="jumbotron">

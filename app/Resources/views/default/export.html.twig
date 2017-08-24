@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li class="active">Exportação mesas</li>
+    </ol>
+    
+    <div class="content">
+  		<h3>Exportação mesas</h3>
+  		<hr>
+      <div class="jumbotron">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_rest(form) }}
+      </div>
+      {% if ciclos is not empty %}
+      <div class="jumbotron">
+        <h3>Resultados</h3>
+        <hr>
+        <table class="table table-striped">
+            <thead><th>#</th><th>Mesa</th><th>Estufa</th><th>Tipo</th><th>Sementeira</th><th></th></thead>
+            <tbody>
+              {% for ciclo in ciclos %}
+              <tr {% if ciclo.isActive == false %}class="warning"{% endif %}>
+                <th scope="row">{{ ciclo.id }}</th>
+                <td>{{ ciclo.mesa.name }}</td>
+                <td>{{ ciclo.mesa.type }}</td>
+                <td><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> {{ ciclo.type|upper }}</td>
+                <td>{{ ciclo.createdAt|date("d/m/Y - H:i", "Europe/Lisbon") }}</td>
+                <td><a href="{{ path('print_ciclo', {'id': ciclo.id }) }}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      {% endif %}
+    </div>
+    <script>
+        $(document).ready(function() {
+            // configure the bootstrap datepicker
+            $('.js-datepicker').datepicker({
+                dateFormat: 'dd-mm-yy',
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}
+

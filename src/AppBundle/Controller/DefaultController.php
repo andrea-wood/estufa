@@ -10,6 +10,7 @@ use AppBundle\Form\MesaType;
 use AppBundle\Form\ProdutoType;
 use AppBundle\Entity\Produto;
 use AppBundle\Entity\Ciclo;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DefaultController extends Controller
@@ -27,18 +28,24 @@ class DefaultController extends Controller
 
     public function estufaAnaAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/estufa_ana.html.twig');
+        $mesas = $this->getDoctrine()
+        ->getRepository(Mesa::class)
+        ->findByType('Ana');
+   
+         return $this->render('default/estufa_ana.html.twig', array(
+            'mesas' => $mesas,
+        ));
     }
 
-    public function estufaCatAction(Request $request)
+    public function estufaAction(Request $request, $type)
     {
         $mesas = $this->getDoctrine()
         ->getRepository(Mesa::class)
-        ->findByType('Catarina');
+        ->findByType($type);
    
-         return $this->render('default/estufa_cat.html.twig', array(
+         return $this->render('default/estufa.html.twig', array(
             'mesas' => $mesas,
+            'type' => $type
         ));
     }
 
@@ -162,21 +169,30 @@ class DefaultController extends Controller
             $mesa->setCiclo($ciclo);
 
         }
-        //dump($mesa->getCiclos()->first()->getTratamentos()->first()->getProdutos()->first());exit;
+        
+        //dump($ciclo);exit;
+        
         $form = $this->createForm(MesaType::class, $mesa);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            if($form->has('create')){  
 
-            if($form->has('close')){
+                if($form->get('create')->isClicked()){
 
-                $nextAction = $form->get('close')->isClicked()
-                ? 'mesa_close'
-                : 'mesa_save';
-               
+                    $mesa->addCiclo($mesa->getCiclo());
 
-                if("mesa_close" === $nextAction ){
+                    $mesa->setStatus(1);
+
+                }
+            
+            }
+
+            if($form->has('close')){  
+
+                if($form->get('close')->isClicked()){
 
                     $mesa->getCiclo()->setIsActive(false);
 
@@ -185,14 +201,76 @@ class DefaultController extends Controller
                 }
 
             }
+            
+            //dump($mesa);exit;
 
             $em->flush();
+
             return $this->redirect($request->getUri());
         }
 
         return $this->render('default/mesa.html.twig', array(
             'form' => $form->createView(),
             'mesa' => $mesa
+        ));
+    }
+
+
+    public function exportAction(Request $request)
+    {
+        
+       $ciclos = null;
+
+       $form = $this->createFormBuilder(array())
+        ->add('startDate', DateType::class, array(
+            'widget' => 'single_text',
+            'html5' => false,
+            'format' => 'dd-MM-yyyy',
+            'model_timezone' => 'Europe/Lisbon',
+            'attr' => ['class' => 'js-datepicker'],
+        ))
+        ->add('endDate', DateType::class, array(
+            'widget' => 'single_text',
+            'html5' => false,
+            'format' => 'dd-MM-yyyy',
+            'model_timezone' => 'Europe/Lisbon',
+            'attr' => ['class' => 'js-datepicker'],
+        ))
+        ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'))
+        ->getForm();
+
+         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+
+            if($data["endDate"] >= $data["startDate"]){
+
+                $ciclos = $this->getDoctrine()
+                ->getRepository(Ciclo::class)
+                ->findAllOrderedByDate($data["startDate"], $data["endDate"]);
+     
+
+            }
+
+        }
+
+         return $this->render('default/export.html.twig', array(
+            'form' => $form->createView(),
+            'ciclos' => $ciclos,
+        ));
+    }
+
+
+    public function printAction(Request $request, $id)
+    {
+        $ciclo = $this->getDoctrine()
+        ->getRepository(Ciclo::class)
+        ->findOneById($id);
+
+         return $this->render('print/ciclo.html.twig', array(
+            'ciclo' => $ciclo,
         ));
     }
 }

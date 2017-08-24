@@ -2,7 +2,7 @@
 {% block body %}
     <ol class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Home</a></li>
-      <li><a href="{{ path('estufa_cat') }}">Estufa da {{ mesa.type }}</a></li>
+      <li><a href="{{ path('estufa', { 'type' : mesa.type|lower }) }}">Estufa da {{ mesa.type }}</a></li>
       <li class="active">{{ mesa.name}}</li>
     </ol>
     
@@ -61,13 +61,31 @@
           <ul>
             {% for ciclo in mesa.ciclos %}
                 {% if ciclo.isActive == 0 %}
-                <li>{{ ciclo.type }} ( {{ ciclo.createdAt|date("d/m/Y", "Europe/Paris") }} )</li>
+                <li>{{ ciclo.type }} ( {{ ciclo.createdAt|date("d/m/Y - H:i", "Europe/Paris") }} / {{ ciclo.updatedAt|date("d/m/Y - H:i", "Europe/Paris") }} )</li>
                 {% endif %}
             {% endfor %}
           </ul>
       </div>
       {% endif %}
     </div>
+
+<div class="modal fade" id="modalCheck" tabindex="-1" role="dialog" aria-labelledby="modalCheckLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalCheckLabel">Check</h4>
+      </div>
+      <div class="modal-body">
+        Arre you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="confirm">Acabar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
    <script>
     var $collectionHolderTratamentos;
@@ -110,6 +128,15 @@
 
               addColheitaForm($collectionHolderColheitas, $newColheitaLinkLi);
               
+          });
+
+          $("#confirm").on("click", function(){
+              $("#appbundle_mesa_close").unbind('click');
+              $("#appbundle_mesa_close").trigger('click');
+          });
+
+          $("#appbundle_mesa_close").on("click", function(e){
+              e.preventDefault();
           });
       });
 

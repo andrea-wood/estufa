@@ -1,9 +1,62 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li class="active">Estufa da Ana</li>
+    </ol>
+    
+    <div class="content">
+			<h3>Estufa da Ana</h3>
+			<hr>
+	      <!-- Main component for a primary marketing message or call to action -->
+	      <div class="jumbotron">
+	      	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	        {% for mesa in mesas %}
+				  <div class="panel {% if mesa.status == 0 %}panel-default{% endif %} {% if mesa.status == 2 %}panel-danger{% endif %} {% if mesa.status == 1 %}panel-success{% endif %}">
+				    <div class="panel-heading" role="tab" id="heading{{mesa.id}}">
+				      <h4 class="panel-title">
+				        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{mesa.id}}" aria-expanded="true" aria-controls="collapseOne">
+				         {{ mesa.name }}
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapse{{mesa.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+				      <div class="panel-body">
+				      	<div class="row">
+				      		<ul>
+			        			{% for ciclo in mesa.ciclos %}
+			      					{% if ciclo.isActive  %}
+			      						<li><b>Produtos</b></li>
+		        						<ul>
+			      						{% for tratamento in ciclo.tratamentos %}
+			      						<li><b>{{ tratamento.produto.name[:3] }} : {{ tratamento.diffExpirationDate()|date('%R%a dias') }}</b></li>
+			      						{% endfor  %}
+			      						</ul>
+			      					{% endif %}
+		  						{% endfor  %}
+		  						<br>
+			        			{% for ciclo in mesa.ciclos %}
+			      					{% if ciclo.isActive  %}
+			      					 <li><b>Colheitas</b></li>
+		        						<ul>
+			      						{% for colheita in ciclo.colheitas %}
+			      							<li><b>{{ colheita.kg }} Quilos ( {{ colheita.createdAt|date("d/m/Y", "Europe/Lisbon") }} )</b></li>
+			      						{% endfor  %}
+			      						</ul>
+			      					{% endif %}
+		  						{% endfor  %}	
+		  					</ul>	        		
+						</div>
+						<hr>
+					  <div class="row text-center">
+					  	<a href="{{ path('mesa', {'id': mesa.id, 'type' : mesa.type|lower}) }}"><span class="glyphicon glyphicon-plus" style="color:#333;font-size: 20px;" aria-hidden="true"></span></a>
+					  </div>
+				      </div>
+				    </div>
+				  </div>
+	    	{% endfor %}
+	    	</div>
+	      </div>
       </div>
 {% endblock %}
 
