@@ -6,32 +6,114 @@
     </ol>
     
     <div class="content">
-  		<h3>Exportação mesas</h3>
-  		<hr>
+
+      <h3>Exportação mesas</h3>
+      <hr>
       <div class="jumbotron">
+        <h3>Procurar</h3>
+        <hr>
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ form_rest(form) }}
       </div>
+
       {% if ciclos is not empty %}
       <div class="jumbotron">
         <h3>Resultados</h3>
         <hr>
+        <div class="table-responsive">
         <table class="table table-striped">
-            <thead><th>#</th><th>Mesa</th><th>Estufa</th><th>Tipo</th><th>Sementeira</th><th></th></thead>
+            <thead>
+              <tr>
+                <th>#</th><th>Mesa</th><th>Estufa</th><th>Tipo</th><th>Sementeira</th><th></th>
+              </tr>
+            </thead>
             <tbody>
               {% for ciclo in ciclos %}
-              <tr {% if ciclo.isActive == false %}class="warning"{% endif %}>
-                <th scope="row">{{ ciclo.id }}</th>
-                <td>{{ ciclo.mesa.name }}</td>
-                <td>{{ ciclo.mesa.type }}</td>
-                <td><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> {{ ciclo.type|upper }}</td>
-                <td>{{ ciclo.createdAt|date("d/m/Y - H:i", "Europe/Lisbon") }}</td>
-                <td><a href="{{ path('print_ciclo', {'id': ciclo.id }) }}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>
-              </tr>
+                <tr {% if ciclo.isActive == false %}class="warning"{% endif %}>
+                  <th scope="row">{{ ciclo.id }}</th>
+                  <td>{{ ciclo.mesa.name }}</td>
+                  <td>{{ ciclo.mesa.type }}</td>
+                  <td>
+                    <span class="glyphicon glyphicon-leaf"></span> 
+                   {{ ciclo.type|upper }}
+                  </td>
+                  <td><span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="Sementeira: {{ ciclo.createdAt|date("d/m/Y - H:i", "Europe/Lisbon") }}"></span></td>
+                  <td><a href="{{ path('print_ciclo', {'id': ciclo.id }) }}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>
+                </tr>
               {% endfor %}
             </tbody>
         </table>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if groupedCiclos is not empty %}
+      <div class="jumbotron">
+        <h3>Lista</h3>
+        <hr>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+          {% for year, months in groupedCiclos %}
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading{{  year }}">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{  year }}" aria-expanded="false">
+                  <b>Ano {{  year }}</b>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse{{  year }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{  year }}">
+              <div class="panel-body">
+  
+                <div class="panel-group" id="accordion{{  year }}" role="tablist" aria-multiselectable="false">
+                 {% for month, ciclos in months %}
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading{{  year }}-{{  month }}">
+                      <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion{{  year }}" href="#collapse{{  year }}-{{  month }}" aria-expanded="false">
+                         <b>Mês {{  month }}</b>
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapse{{  year }}-{{  month }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{  year }}-{{  month }}">
+                      <div class="panel-body">
+                        {% if ciclos is not empty %}
+                        <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th><th>Mesa</th><th>Estufa</th><th>Tipo</th><th>Sementeira</th><th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for ciclo in ciclos %}
+                                <tr {% if ciclo.isActive == false %}class="warning"{% endif %}>
+                                  <th scope="row">{{ ciclo.id }}</th>
+                                  <td>{{ ciclo.mesa.name }}</td>
+                                  <td>{{ ciclo.mesa.type }}</td>
+                                  <td>
+                                    <span class="glyphicon glyphicon-leaf"></span> 
+                                   {{ ciclo.type|upper }}
+                                  </td>
+                                  <td><span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="Sementeira: {{ ciclo.createdAt|date("d/m/Y - H:i", "Europe/Lisbon") }}"></span></td>
+                                  <td><a href="{{ path('print_ciclo', {'id': ciclo.id }) }}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>
+                                </tr>
+                              {% endfor %}
+                            </tbody>
+                        </table>
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
       {% endif %}
     </div>
@@ -41,6 +123,8 @@
             $('.js-datepicker').datepicker({
                 dateFormat: 'dd-mm-yy',
             });
+
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 {% endblock %}

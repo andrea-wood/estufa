@@ -52,5 +52,5 @@ export_mesas:
     defaults:  { _controller: AppBundle:Default:export }
 
 print_ciclo:
-    path: /ciclos/print/{id}
-    defaults:  { _controller: AppBundle:Default:print }
+    path: /mesas/export/ciclos/print/{id}
+    defaults:  { _controller: AppBundle:Default:exportCiclo }

@@ -219,7 +219,16 @@ class DefaultController extends Controller
     public function exportAction(Request $request)
     {
         
-       $ciclos = null;
+        $ciclos = null;
+
+        $allCiclos = $this->getDoctrine()
+        ->getRepository(Ciclo::class)
+        ->findAll();
+
+        foreach($allCiclos as $ciclo){
+
+            $groupedCiclos[$ciclo->getCreatedAt()->format("Y")][$ciclo->getCreatedAt()->format("m")][] = $ciclo;
+        }
 
        $form = $this->createFormBuilder(array())
         ->add('startDate', DateType::class, array(
@@ -236,7 +245,7 @@ class DefaultController extends Controller
             'model_timezone' => 'Europe/Lisbon',
             'attr' => ['class' => 'js-datepicker'],
         ))
-        ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'))
+        ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Procurar'))
         ->getForm();
 
          $form->handleRequest($request);
@@ -250,7 +259,7 @@ class DefaultController extends Controller
                 $ciclos = $this->getDoctrine()
                 ->getRepository(Ciclo::class)
                 ->findAllOrderedByDate($data["startDate"], $data["endDate"]);
-     
+
 
             }
 
@@ -259,11 +268,12 @@ class DefaultController extends Controller
          return $this->render('default/export.html.twig', array(
             'form' => $form->createView(),
             'ciclos' => $ciclos,
+            'groupedCiclos' => $groupedCiclos
         ));
     }
 
 
-    public function printAction(Request $request, $id)
+    public function exportCicloAction(Request $request, $id)
     {
         $ciclo = $this->getDoctrine()
         ->getRepository(Ciclo::class)
@@ -271,6 +281,7 @@ class DefaultController extends Controller
 
          return $this->render('print/ciclo.html.twig', array(
             'ciclo' => $ciclo,
+            'header' => 'Estufa da ' . $ciclo->getMesa()->getType() . ' ' . $ciclo->getMesa()->getName(),
         ));
     }
 }

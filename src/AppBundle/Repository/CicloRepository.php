@@ -13,17 +13,23 @@ class CicloRepository extends \Doctrine\ORM\EntityRepository
 	public function findAllOrderedByDate($startDate, $endDate)
     {	
 
-		$query = $this->getEntityManager()
-		   	->createQuery('
-				SELECT c 
-				FROM AppBundle:Ciclo c
-				WHERE c.createdAt >= :startDate AND c.updatedAt <= :endDate
-			')
-		    ->setParameter('startDate', $startDate)
-		    ->setParameter('endDate', $endDate);
+	    // $emConfig = $this->getEntityManager()->getConfiguration();
+	    // $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+	    // $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+	    // $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
+
+        $query = $this->createQueryBuilder('c');
+
+	    $query->select('c')
+		       ->where('c.createdAt >= :startDate')
+		       ->andWhere('c.createdAt <= :endDate');
+
+		$query->setParameter('startDate', $startDate)
+		    ->setParameter('endDate', $endDate);		    
+
 
 		try {
-			return $query->getResult();
+			return $query->getQuery()->getResult();
 		} catch (\Doctrine\ORM\NoResultException $e) {
 			dump($e);exit;
 		}

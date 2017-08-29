@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Estufas Quinta S. Antonio{% endblock %}</title>
+        <title>{% block title %}Quinta S. Antonio{% endblock %}</title>
         {% block stylesheets %}
         {% endblock %}
           <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
@@ -46,13 +46,18 @@
                   <ul class="dropdown-menu">
                     <li><a href="{{ path('estufa', { 'type' : 'catarina'}) }}">Estufa da Catarina</a></li>
                     <li><a href="{{ path('estufa', { 'type' : 'ana'}) }}">Estufa da Ana</a></li>
-                    <li class="dropdown-header">Exportação</li>
-                    <li><a href="{{ path('export_mesas') }}">Mesas</a></li>
-<!--                     <li><a href="#">Something else here</a></li>
+ <!--                <li class="dropdown-header"></li>
+                    <li><a href="#">Something else here</a></li>
                     <li role="separator" class="divider"></li>
                     
                     <li><a href="#">Separated link</a></li>
                     <li><a href="#">One more separated link</a></li> -->
+                  </ul>
+                </li>
+                <li class="dropdown {% if 'export' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Exportação <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{{ path('export_mesas') }}">Mesas</a></li>
                   </ul>
                 </li>
               </ul>
