@@ -27,6 +27,7 @@ class CicloTratamentosType extends AbstractType
             'allow_add'    => true,
             'by_reference' => false,
             'entry_options'  => array(
+                'label' => false,
                 'attr'      => array('class' => 'tratamento-box')
             ),
         ));

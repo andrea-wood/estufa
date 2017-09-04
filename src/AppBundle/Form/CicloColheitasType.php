@@ -27,6 +27,7 @@ class CicloColheitasType extends AbstractType
             'allow_add'    => true,
             'by_reference' => false,
             'entry_options'  => array(
+                'label' => false,
                 'attr'      => array('class' => 'colheita-box')
             ),
         ));
