@@ -13,8 +13,73 @@
         {% endblock %}
     </head>
     <body>
+    {{ dump(ciclo)}}
+      {% set time = ciclo.createdAt|date("U") %}
       <page size="A4">
-        <table class="table table-bordered"> <thead> <tr> <th>#</th> <th>First Name</th> <th>Last Name</th> <th>Username</th> </tr> </thead> <tbody> <tr> <th scope="row">1</th> <td>Mark</td> <td>Otto</td> <td>@mdo</td> </tr> <tr> <th scope="row">2</th> <td>Jacob</td> <td>Thornton</td> <td>@fat</td> </tr> <tr> <th scope="row">3</th> <td>Larry</td> <td>the Bird</td> <td>@twitter</td> </tr> </tbody> </table>
+        <h1>Controle de tratamentos, colheitas e sementeiras</h1>
+      <table class="table table-bordered"> 
+        <thead> 
+          <tr> 
+            <th colspan="{{ ciclo.tratamentos|length + 2}}" style="text-align: center;">{{ ciclo.mesa.name }} - {{ ciclo.mesa.type }}</th>
+            <th style="text-align: center;">Data</th>
+          </tr> 
+        </thead> 
+        <tbody style="text-align: center;font-weight: bold;"> 
+          <tr>
+            <td colspan="{{ ciclo.tratamentos|length}}">Tratamentos</td>
+            <td>Colheitas</td>
+            <td>Data de sementeira</td>
+            <td rowspan="2">{{ciclo.createdAt|localizeddate('none', 'none', null, "Europe/Lisbon", "MMMM Y")|capitalize }}</td>
+          </tr>
+          <tr>
+            {% for tratamento in ciclo.tratamentos %}
+            <td rowspan="2">{{ tratamento.produto.name }} {{ tratamento.produto.days }}</td>
+            {% endfor %}
+            <td rowspan="2">{{ ciclo.type|upper }}</td>
+            <td>{{ ciclo.type|upper }}</td>
+          </tr>
+          <tr>
+            <td>dd/mm/aa</td>
+            <td>Dia</td>
+          </tr>
+          {% set daysInMonth = time|date('t') %}
+          {% set currentMonth = time|date('m') %}
+          {% set currentYear = time|date('Y') %}
+          {% for index, day in range(1,daysInMonth) %}
+            {% set currentDate = currentYear ~ "-" ~ currentMonth ~ "-" ~ day %}
+            <tr>
+              {% set endProduto = 0 %}
+              {% for tratamento in ciclo.tratamentos %}
+                {% set endProduto = tratamento.produto.days ~ " days" %}
+                <td>
+                {% if  currentDate|date('d/m/Y') >= tratamento.createdAt|date('d/m/Y')  and   tratamento.createdAt|date_modify(endProduto)|date('d/m/Y') <=  currentDate|date('d/m/Y')  %}
+                  X  {{ tratamento.createdAt|date('d/m/Y')}}
+                {% endif %}
+                </td>
+              {% endfor %}
+              <td>
+                {% for clh in ciclo.colheitas %}
+                    
+                    {% if clh.createdAt|date('d/m/Y') == currentDate|date('d/m/Y') %} {{clh.kg}} KG {% endif %}
+                {% endfor %}
+              </td>
+              <td {% if ciclo.createdAt|date('d/m/Y') == currentDate|date('d/m/Y') %} class="bg-info" {% endif %}>{% if ciclo.createdAt|date('d/m/Y') == currentDate|date('d/m/Y') %} {{ciclo.createdAt|date('d/m/Y')}} {% endif %}</td>
+              <td>{{ day }}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="{{ ciclo.tratamentos|length}}" style="text-align: left;"><b>Totais</b></td>
+            <td>
+              {% set totais = 0 %}
+              {% for clh in ciclo.colheitas %}
+                {% set totais = totais + clh.kg %}
+              {% endfor %}
+             {{ totais }} KG
+            </td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody> 
+      </table>
       </page>
     </body>
 </html>

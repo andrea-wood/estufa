@@ -1,5 +1,6 @@
 body {
   background: rgb(204,204,204); 
+  font-size: 9px;
 }
 page {
   background: white;
@@ -31,6 +32,25 @@ page[size="A5"] {
 page[size="A5"][layout="portrait"] {
   width: 21cm;
   height: 14.8cm;  
+}
+.vertical-text {
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+}
+table{
+  max-width: 2480px;
+  width:100%;
+}
+table td{
+  width: auto;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+h1{
+  font-size: 24px;
+  padding: 20px;
+  text-align: center;
 }
 @media print {
   body, page {
