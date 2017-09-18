@@ -11,6 +11,8 @@ AppBundle\Entity\Ciclo:
     fields:
         createdAt:
             type: datetime
+        endedAt:
+            type: datetime
         updatedAt:
             type: datetime
         type:
@@ -20,6 +22,10 @@ AppBundle\Entity\Ciclo:
             type: boolean
             options:
                 default: 1
+        isEnded:
+            type: boolean
+            options:
+                default: 0
     oneToMany:
         colheitas:
             targetEntity: Colheita

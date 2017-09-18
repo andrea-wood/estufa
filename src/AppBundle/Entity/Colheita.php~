@@ -42,7 +42,7 @@ class Colheita
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = (new \DateTime());
 
         return $this;
     }
@@ -80,5 +80,33 @@ class Colheita
     {
         return $this->kg;
     }
-}
+    /**
+     * @var \AppBundle\Entity\Ciclo
+     */
+    private $ciclo;
 
+
+    /**
+     * Set ciclo
+     *
+     * @param \AppBundle\Entity\Ciclo $ciclo
+     *
+     * @return Colheita
+     */
+    public function setCiclo(\AppBundle\Entity\Ciclo $ciclo = null)
+    {
+        $this->ciclo = $ciclo;
+
+        return $this;
+    }
+
+    /**
+     * Get ciclo
+     *
+     * @return \AppBundle\Entity\Ciclo
+     */
+    public function getCiclo()
+    {
+        return $this->ciclo;
+    }
+}

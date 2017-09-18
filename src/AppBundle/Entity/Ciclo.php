@@ -256,4 +256,62 @@ class Ciclo
     {
         return $this->colheitas;
     }
+    /**
+     * @var \DateTime
+     */
+    private $endedAt = null;
+
+
+    /**
+     * Set endedAt
+     *
+     * @param \DateTime $endedAt
+     *
+     * @return Ciclo
+     */
+    public function setEndedAt($endedAt)
+    {
+        $this->endedAt = $endedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get endedAt
+     *
+     * @return \DateTime
+     */
+    public function getEndedAt()
+    {
+        return $this->endedAt;
+    }
+    /**
+     * @var boolean
+     */
+    private $isEnded = 0;
+
+
+    /**
+     * Set isEnded
+     *
+     * @param boolean $isEnded
+     *
+     * @return Ciclo
+     */
+    public function setIsEnded($isEnded)
+    {
+        $this->isEnded = $isEnded;
+
+        return $this;
+    }
+
+    /**
+     * Get isEnded
+     *
+     * @return boolean
+     */
+    public function getIsEnded()
+    {
+        return $this->isEnded;
+    }
 }

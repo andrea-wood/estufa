@@ -215,4 +215,74 @@ class Ciclo
     {
         return $this->mesa;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $colheitas;
+
+
+    /**
+     * Add colheita
+     *
+     * @param \AppBundle\Entity\Colheita $colheita
+     *
+     * @return Ciclo
+     */
+    public function addColheita(\AppBundle\Entity\Colheita $colheita)
+    {
+        $colheita->setCiclo($this);
+        
+        $this->colheitas[] = $colheita;
+
+        return $this;
+    }
+
+    /**
+     * Remove colheita
+     *
+     * @param \AppBundle\Entity\Colheita $colheita
+     */
+    public function removeColheita(\AppBundle\Entity\Colheita $colheita)
+    {
+        $this->colheitas->removeElement($colheita);
+    }
+
+    /**
+     * Get colheitas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getColheitas()
+    {
+        return $this->colheitas;
+    }
+    /**
+     * @var \DateTime
+     */
+    private $endedAt = null;
+
+
+    /**
+     * Set endedAt
+     *
+     * @param \DateTime $endedAt
+     *
+     * @return Ciclo
+     */
+    public function setEndedAt($endedAt)
+    {
+        $this->endedAt = $endedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get endedAt
+     *
+     * @return \DateTime
+     */
+    public function getEndedAt()
+    {
+        return $this->endedAt;
+    }
 }

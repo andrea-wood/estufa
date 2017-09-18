@@ -60,6 +60,7 @@
                     <li><a href="{{ path('export_mesas') }}">Mesas</a></li>
                   </ul>
                 </li>
+                <li {% if app.request.attributes.get('_route') == 'qrcode' %}class="active"{% endif %}><a href="{{ path('qrcode') }}">Qrcode</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">  
                 <li><a href="#" title="Signed as {{ app.user.username }}"><span class="glyphicon glyphicon-user"  aria-hidden="true"></span></a></li>

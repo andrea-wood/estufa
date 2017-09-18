@@ -197,8 +197,21 @@ class DefaultController extends Controller
 
                     $mesa->getCiclo()->setIsActive(false);
 
+                    $mesa->getCiclo()->setIsEnded(true);
+
+                    $mesa->getCiclo()->setEndedAt((new \DateTime()));
+                    
                     $mesa->setStatus(0);
 
+                    foreach($mesa->getCiclo()->getTratamentos() as $tratamento){
+
+                        $tratamento->setEndedAt((new \DateTime()));
+
+                        $tratamento->setIsEnded(true);
+
+                    }
+
+                    
                 }
 
             }
@@ -281,10 +294,32 @@ class DefaultController extends Controller
         $ciclo = $this->getDoctrine()
         ->getRepository(Ciclo::class)
         ->findOneById($id);
-
+        
          return $this->render('print/ciclo.html.twig', array(
             'ciclo' => $ciclo,
             'header' => 'Estufa da ' . $ciclo->getMesa()->getType() . ' ' . $ciclo->getMesa()->getName(),
+        ));
+    }
+
+    public function qrcodeListAction(Request $request)
+    {
+        $mesas = $this->getDoctrine()
+        ->getRepository(Mesa::class)
+        ->findAll();
+        
+         return $this->render('default/qrcode-list.html.twig', array(
+            'mesas' => $mesas,
+        ));
+    }
+
+    public function qrcodePrintAction(Request $request,  $id)
+    {
+        $mesa = $this->getDoctrine()
+        ->getRepository(Mesa::class)
+        ->findOneById($id);
+        
+         return $this->render('print/qrcode.html.twig', array(
+            'mesa' => $mesa ,
         ));
     }
 }

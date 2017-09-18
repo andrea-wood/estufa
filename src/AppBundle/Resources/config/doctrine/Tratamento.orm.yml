@@ -10,7 +10,13 @@ AppBundle\Entity\Tratamento:
                 strategy: AUTO
     fields:
         createdAt:
-            type: datetime        
+            type: datetime  
+        endedAt:
+            type: datetime 
+        isEnded:
+            type: boolean
+            options:
+                default: 0
     manyToOne:
         produto:
             targetEntity: Produto
