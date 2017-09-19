@@ -23,7 +23,7 @@
               <tr>
                 <td><span class="glyphicon glyphicon-oil" aria-hidden="true"></span> <a href="{{ path('produto', {'id': produto.id }) }}" >{{ produto.name }}</a></td>
                 <td>{{ produto.days }}</td>
-                <td>{{ produto.updatedAt|date("d/m/Y - H:i", "Europe/Lisbon") }}</td>
+                <td>{{ produto.updatedAt|date("d/m/Y - H:i") }}</td>
               </tr> 
             {% endfor %}
           </tbody>

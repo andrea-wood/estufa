@@ -36,7 +36,7 @@
                   <td>{{ ciclo.mesa.type }}</td>
                   <td>
                     <span class="glyphicon glyphicon-leaf"></span> 
-                   {{ ciclo.type|upper }}
+                   {{ ciclo.type.name|upper }}
                   </td>
                   <td><span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="Sementeira: {{ ciclo.createdAt|date("d/m/Y", "Europe/Lisbon") }} / {{ ciclo.endedAt|date("d/m/Y", "Europe/Lisbon") }}"></span></td>
                   <td><a href="{{ path('print_ciclo', {'id': ciclo.id }) }}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>
@@ -93,7 +93,7 @@
                                   <td>{{ ciclo.mesa.type }}</td>
                                   <td>
                                     <span class="glyphicon glyphicon-leaf"></span> 
-                                   {{ ciclo.type|upper }}
+                                   {{ ciclo.type.name|upper }}
                                   </td>
                                   <td><span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="Sementeira: {{ ciclo.createdAt|date("d/m/Y", "Europe/Lisbon") }} / {{ ciclo.endedAt|date("d/m/Y", "Europe/Lisbon") }}"></span></td>
                                   <td><a href="{{ path('print_ciclo', {'id': ciclo.id }) }}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>

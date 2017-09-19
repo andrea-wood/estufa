@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use AppBundle\Form\TratamentoType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
@@ -21,12 +22,10 @@ class CicloType extends AbstractType
     {
 
         $builder
-        ->add('type', ChoiceType::class, array(
+        ->add('type', EntityType::class, array(
             'label' => false,
-            'choices' => array(
-                'Salsa' => 'salsa', 
-                'Coentros' => 'coentros',
-            ),
+            'class' => 'AppBundle:Sementeira',
+            'choice_label' => 'name',
             'empty_data'  => null,
             'preferred_choices' => array(null)
         ))

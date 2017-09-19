@@ -26,10 +26,16 @@
 				      		<ul>
 			        			{% for ciclo in mesa.ciclos %}
 			      					{% if ciclo.isActive  %}
+			      						<li><b>Sementeira</b></li>
+			      						<ul><li>{{ ciclo.type.name }}</li></ul>
+			      					{% endif %}
+		  						{% endfor  %}
+			        			{% for ciclo in mesa.ciclos %}
+			      					{% if ciclo.isActive  %}
 			      						<li><b>Produtos</b></li>
 		        						<ul>
 			      						{% for tratamento in ciclo.tratamentos %}
-			      						<li><b>{{ tratamento.produto.name[:3] }} : {{ tratamento.diffExpirationDate()|date('%R%a dias') }}</b></li>
+			      							<li><b>{{ tratamento.produto.name[:3] }} : {{ tratamento.diffExpirationDate()|date('%R%a dias') }}</b></li>
 			      						{% endfor  %}
 			      						</ul>
 			      					{% endif %}
@@ -40,7 +46,7 @@
 			      					 <li><b>Colheitas</b></li>
 		        						<ul>
 			      						{% for colheita in ciclo.colheitas %}
-			      							<li><b>{{ colheita.kg }} Quilos ( {{ colheita.createdAt|date("d/m/Y", "Europe/Lisbon") }} )</b></li>
+			      							<li><b>{{ colheita.kg }} Quilos ( {{ colheita.createdAt|date("d/m/Y") }} )</b></li>
 			      						{% endfor  %}
 			      						</ul>
 			      					{% endif %}

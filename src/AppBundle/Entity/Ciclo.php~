@@ -285,4 +285,42 @@ class Ciclo
     {
         return $this->endedAt;
     }
+    /**
+     * @var boolean
+     */
+    private $isEnded = 0;
+
+
+    /**
+     * Set isEnded
+     *
+     * @param boolean $isEnded
+     *
+     * @return Ciclo
+     */
+    public function setIsEnded($isEnded)
+    {
+        $this->isEnded = $isEnded;
+
+        return $this;
+    }
+
+    /**
+     * Get isEnded
+     *
+     * @return boolean
+     */
+    public function getIsEnded()
+    {
+        return $this->isEnded;
+    }
+
+    public function setInitialEndedAt()
+    {
+        $this->endedAt = (new \DateTime());
+
+        return $this;
+    }
+
+    
 }

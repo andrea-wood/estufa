@@ -280,4 +280,12 @@ class Tratamento
     {
         return $this->isEnded;
     }
+
+    public function setInitialEndedAt()
+    {
+        $this->endedAt = (new \DateTime());
+
+        return $this;
+    }
+
 }

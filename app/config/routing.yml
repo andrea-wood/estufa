@@ -47,6 +47,18 @@ add_produto:
     path: /produto/add
     defaults:  { _controller: AppBundle:Default:addProduto }
 
+sementeira:
+    path: /sementeiras/{id}
+    defaults:  { _controller: AppBundle:Default:sementeira }
+
+sementeiras:
+    path: /sementeiras
+    defaults:  { _controller: AppBundle:Default:sementeiras }
+
+add_sementeira:
+    path: /sementeira/add
+    defaults:  { _controller: AppBundle:Default:addSementeira }
+
 export_mesas:
     path: /mesas/export
     defaults:  { _controller: AppBundle:Default:export }
@@ -59,9 +71,14 @@ qrcode:
     path: /qrcode/list
     defaults:  { _controller: AppBundle:Default:qrcodeList }
 
+qrc_print_all:
+    path: /qrcode/print/all
+    defaults:  { _controller: AppBundle:Default:qrcPrtAll }
+
 qrcode_print:
     path: /qrcode/print/{id}
-    defaults:  { _controller: AppBundle:Default:qrcodePrint }
+    defaults:  { _controller: AppBundle:Default:qrcodePrintOne }
+
 
 EndroidQrCodeBundle:
     resource: "@EndroidQrCodeBundle/Controller/"

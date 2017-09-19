@@ -58,7 +58,9 @@
               </thead> 
               <tbody style="text-align: center;font-weight: bold;"> 
                 <tr>
-                  <td colspan="{{ ciclo.tratamentos|length}}">Tratamentos</td>
+                  {% if ciclo.tratamentos|length > 0 %}
+                    <td colspan="{{ ciclo.tratamentos|length}}">Tratamentos</td>
+                  {% endif %}
                   <td>Colheitas</td>
                   <td>Data de sementeira</td>
                   <td rowspan="2">{{ month.name }}</td>
@@ -67,8 +69,8 @@
                   {% for tratamento in ciclo.tratamentos %}
                     <td rowspan="2">{{ tratamento.produto.name }} {{ tratamento.produto.days }}</td>
                   {% endfor %}
-                  <td rowspan="2">{{ ciclo.type|upper }}</td>
-                  <td>{{ ciclo.type|upper }}</td>
+                  <td rowspan="2">{{ ciclo.type.name|upper }}</td>
+                  <td>{{ ciclo.type.name|upper }}</td>
                 </tr>
                 <tr>
                   <td>dd/mm/aa</td>
@@ -114,15 +116,26 @@
 
                 {% if months|length == loop.index %}
                 <tr>
-                  <td colspan="{{ ciclo.tratamentos|length}}" style="text-align: left;"><b>Totais</b></td>
-                  <td>
-                    {% set totais = 0 %}
-                    {% for clh in ciclo.colheitas %}
-                      {% set totais = totais + clh.kg %}
-                    {% endfor %}
-                   {{ totais }} KG
-                  </td>
-                  <td colspan="2"></td>
+                  {% if ciclo.tratamentos|length > 0 %}
+                    <td colspan="{{ ciclo.tratamentos|length}}" style="text-align: left;"><b>Totais</b></td>
+                    <td>
+                      {% set totais = 0 %}
+                      {% for clh in ciclo.colheitas %}
+                        {% set totais = totais + clh.kg %}
+                      {% endfor %}
+                     {{ totais }} KG
+                    </td>
+                    <td colspan="2"></td>
+                  {% else %}
+                    <td colspan="{{ ciclo.tratamentos|length}}" style="text-align: left;"><b>Totais</b>
+                      {% set totais = 0 %}
+                      {% for clh in ciclo.colheitas %}
+                        {% set totais = totais + clh.kg %}
+                      {% endfor %}
+                     {{ totais }} KG
+                    </td>
+                    <td colspan="3"></td>
+                  {% endif %}
                 </tr>
                 {% endif %}
               </tbody> 

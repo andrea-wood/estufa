@@ -31,5 +31,5 @@ AppBundle\Entity\Tratamento:
                 name: ciclo_id
                 referencedColumnName: id
     lifecycleCallbacks: 
-        prePersist: [ setCreatedAt ]
+        prePersist: [ setCreatedAt, setInitialEndedAt ]
         preUpdate: [  ]

@@ -15,9 +15,6 @@ AppBundle\Entity\Ciclo:
             type: datetime
         updatedAt:
             type: datetime
-        type:
-            type: string
-            length: 255
         isActive:
             type: boolean
             options:
@@ -42,6 +39,12 @@ AppBundle\Entity\Ciclo:
             joinColumn:
                 name: mesa_id
                 referencedColumnName: id
+        type:
+            targetEntity: Sementeira
+            cascade:      [persist]
+            joinColumn:
+                name: sementeira_id
+                referencedColumnName: id
     lifecycleCallbacks:
-        prePersist: [ setCreatedAt,setUpdatedAt]
+        prePersist: [ setCreatedAt,setUpdatedAt, setInitialEndedAt]
         preUpdate: [ setUpdatedAt ]

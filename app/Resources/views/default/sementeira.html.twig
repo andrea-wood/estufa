@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li><a href="{{ path('sementeiras') }}">Sementeiras</a></li>
+      <li class="active">{{ sementeira.name }}</li>
+    </ol>
+    <div class="content">
+      {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+      {% endfor %}
+  		<h3>{{ sementeira.name }}</h3>
+  		<hr>
+      <div class="jumbotron">
+      {{ form_start(form) }}
+      {{ form_widget(form) }}
+      <hr>
+      <div class="form-group"><button type="submit" class="save btn">Save</button></div>
+      {{ form_rest(form) }}
+      </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}
+

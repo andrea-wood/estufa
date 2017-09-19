@@ -9,6 +9,8 @@ use AppBundle\Entity\Mesa;
 use AppBundle\Form\MesaType;
 use AppBundle\Form\ProdutoType;
 use AppBundle\Entity\Produto;
+use AppBundle\Entity\Sementeira;
+use AppBundle\Form\SementeiraType;
 use AppBundle\Entity\Ciclo;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,22 +29,11 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function estufaAnaAction(Request $request)
-    {
-        $mesas = $this->getDoctrine()
-        ->getRepository(Mesa::class)
-        ->findByType('Ana');
-   
-         return $this->render('default/estufa_ana.html.twig', array(
-            'mesas' => $mesas,
-        ));
-    }
-
     public function estufaAction(Request $request, $type)
     {
         $mesas = $this->getDoctrine()
         ->getRepository(Mesa::class)
-        ->findByType($type);
+        ->findBy(array('type' => $type), array('status' => 'DESC'));
    
          return $this->render('default/estufa.html.twig', array(
             'mesas' => $mesas,
@@ -58,53 +49,6 @@ class DefaultController extends Controller
    
          return $this->render('default/produtos.html.twig', array(
             'produtos' => $produtos,
-        ));
-    }
-
-
-    public function produtoAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $produto = $em
-        ->getRepository(Produto::class)
-        ->findOneById($id);
-  
-        if(null !== $produto){
-
-            $form = $this->createForm(ProdutoType::class, $produto);
-
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                try{
-
-                    $em->flush();
-
-                    $this->addFlash(
-                        'success',
-                        'Produto actualizado!'
-                    );
-                    
-                }
-                catch(\Exception $e){
-
-                    error_log($e->getMessage());
-
-                    $this->addFlash(
-                        'danger',
-                        $e->getMessage()
-                    );
-                }
-
-                return $this->redirect($request->getUri());
-            }
-
-        }
-
-         return $this->render('default/produto.html.twig', array(
-            'form' => $form->createView(),
-            'produto' => $produto,
         ));
     }
 
@@ -131,8 +75,6 @@ class DefaultController extends Controller
                     'Produto criado!'
                 );
 
-                return  $this->redirectToRoute('produtos');
-
             }
             catch(\Exception $e){
 
@@ -150,6 +92,106 @@ class DefaultController extends Controller
          return $this->render('default/produto.html.twig', array(
             'form' => $form->createView(),
             'produto' => $produto,
+        ));
+    }
+
+    public function sementeirasAction(Request $request)
+    {
+        $sementeiras = $this->getDoctrine()
+        ->getRepository(Sementeira::class)
+        ->findAll();
+   
+         return $this->render('default/sementeiras.html.twig', array(
+            'sementeiras' => $sementeiras,
+        ));
+    }
+
+    public function sementeiraAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $sementeira = $em
+        ->getRepository(Sementeira::class)
+        ->findOneById($id);
+  
+        if(null !== $sementeira){
+
+            $form = $this->createForm(SementeiraType::class, $sementeira);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try{
+
+                    $em->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Sementeira actualizado!'
+                    );
+                    
+                }
+                catch(\Exception $e){
+
+                    error_log($e->getMessage());
+
+                    $this->addFlash(
+                        'danger',
+                        $e->getMessage()
+                    );
+                }
+
+                return $this->redirect($request->getUri());
+            }
+
+        }
+
+         return $this->render('default/sementeira.html.twig', array(
+            'form' => $form->createView(),
+            'sementeira' => $sementeira,
+        ));
+    }
+
+    public function addSementeiraAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $sementeira = new Sementeira();
+
+        $form = $this->createForm(SementeiraType::class, $sementeira);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            try{
+
+                $em->persist($sementeira);
+
+                $em->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Sementeira criada!'
+                );
+
+            }
+            catch(\Exception $e){
+
+                error_log($e->getMessage());
+
+                $this->addFlash(
+                    'danger',
+                    $e->getMessage()
+                );
+
+            }
+  
+        }
+
+         return $this->render('default/sementeira.html.twig', array(
+            'form' => $form->createView(),
+            'sementeira' => $sementeira,
         ));
     }
 
@@ -312,7 +354,7 @@ class DefaultController extends Controller
         ));
     }
 
-    public function qrcodePrintAction(Request $request,  $id)
+    public function qrcodePrintOneAction(Request $request,  $id)
     {
         $mesa = $this->getDoctrine()
         ->getRepository(Mesa::class)
@@ -320,6 +362,17 @@ class DefaultController extends Controller
         
          return $this->render('print/qrcode.html.twig', array(
             'mesa' => $mesa ,
+        ));
+    }
+
+    public function qrcPrtAllAction(Request $request)
+    {
+        $mesas = $this->getDoctrine()
+        ->getRepository(Mesa::class)
+        ->findAll();
+       
+         return $this->render('print/qrcodes.html.twig', array(
+            'mesas' => $mesas ,
         ));
     }
 }
