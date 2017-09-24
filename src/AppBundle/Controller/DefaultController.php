@@ -106,6 +106,53 @@ class DefaultController extends Controller
         ));
     }
 
+
+    public function produtoAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $produto = $em
+        ->getRepository(Produto::class)
+        ->findOneById($id);
+  
+        if(null !== $produto){
+
+            $form = $this->createForm(ProdutoType::class, $produto);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try{
+
+                    $em->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Produto actualizado!'
+                    );
+                    
+                }
+                catch(\Exception $e){
+
+                    error_log($e->getMessage());
+
+                    $this->addFlash(
+                        'danger',
+                        $e->getMessage()
+                    );
+                }
+
+                return $this->redirect($request->getUri());
+            }
+
+        }
+
+         return $this->render('default/produto.html.twig', array(
+            'form' => $form->createView(),
+            'produto' => $produto,
+        ));
+    }
+
     public function sementeiraAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getEntityManager();
