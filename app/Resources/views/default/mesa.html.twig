@@ -23,7 +23,6 @@
               {% for tratamento in ciclo.tratamentos %}
               <li {% if "now"|date('Y-m-d') <= tratamento.getExpirationDate()|date('Y-m-d') %}class="text-danger"{% else %}class="text-success"{% endif %}>
                 <b>{{ tratamento.produto.name }}</b>  ( Creação : {{ tratamento.createdAt|date("d/m/Y") }} / Expiração : {{tratamento.getExpirationDate()|date("d/m/Y")}} )
-                }
               </li>
               {% endfor %}
             </ul>

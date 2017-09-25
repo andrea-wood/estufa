@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li><a href="{{ path('tanques') }}">Tanques</a></li>
+      <li class="active">{{ tanque.name }}</li>
+    </ol>
+    <div class="content">
+      {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+      {% endfor %}
+  		<h3>{{ tanque.name }}</h3>
+  		<hr>
+      <div class="jumbotron">
+      {{ form_start(form) }}
+      {{ form_widget(form) }}
+      <hr>
+      <div class="form-group"><button type="submit" class="save btn">Save</button></div>
+      {{ form_rest(form) }}
+      </div>
+    </div>
+   <script>
+
+    var $collectionHolderNutrientes;
+
+    var $addNutrienteLink = $('<button type="button" class="btn btn-primary add_nutriente_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um nutriente</button>');
+
+    var $newNutrienteLinkLi = $addNutrienteLink;
+
+    $(document).ready(function() {
+
+          $collectionHolderNutrientes = $('#appbundle_tanque_nutrientes');
+         
+          $collectionHolderNutrientes.append($newNutrienteLinkLi);
+
+          $collectionHolderNutrientes.data('index', $collectionHolderNutrientes.find(':input').length);
+
+          $collectionHolderNutrientes.find('.collection-box').each(function() {
+
+              addNutrienteFormDeleteLink($(this));
+          
+          });
+          
+          $addNutrienteLink.on('click', function(e) {
+
+              e.preventDefault();
+
+              addNutrienteForm($collectionHolderNutrientes, $newNutrienteLinkLi);
+              
+          });
+
+          $("#confirm").on("click", function(){
+              $("#appbundle_mesa_close").unbind('click');
+              $("#appbundle_mesa_close").trigger('click');
+          });
+
+          $("#appbundle_mesa_close").on("click", function(e){
+              e.preventDefault();
+          });
+
+      });
+
+      function addNutrienteForm($collectionHolderNutrientes, $newNutrienteLinkLi) {
+
+        var prototype = $collectionHolderNutrientes.data('prototype');
+
+        var index = $collectionHolderNutrientes.data('index');
+
+        var newForm = prototype.replace(/__name__/g, index);
+
+        $collectionHolderNutrientes.data('index', index + 1);
+
+        var $newFormDiv = $(newForm);
+
+        addNutrienteFormDeleteLink($newFormDiv.find('.collection-box'));
+
+        $newNutrienteLinkLi.before($newFormDiv);
+
+      }
+
+      function addNutrienteFormDeleteLink($NutrienteForm) {
+
+          var $removeFormA = $('<div class="form-class text-center"><a href="#"><span class="glyphicon glyphicon-minus text-danger" aria-hidden="true"></span></a></div>');
+
+          $NutrienteForm.append($removeFormA);
+
+          $removeFormA.on('click', function(e) {
+
+              e.preventDefault();
+
+              $NutrienteForm.parent().remove();
+          });
+      }
+
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}
+

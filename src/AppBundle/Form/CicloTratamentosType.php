@@ -22,13 +22,13 @@ class CicloTratamentosType extends AbstractType
 
         $builder
        ->add('tratamentos', CollectionType::class, array(
-            'label' => false,
+            'label' => "Tratamento",
             'entry_type'   => TratamentoType::class,
             'allow_add'    => true,
             'by_reference' => false,
             'entry_options'  => array(
                 'label' => false,
-                'attr'      => array('class' => 'tratamento-box')
+                'attr'      => array('class' => 'collection-box bg-info')
             ),
         ));
 

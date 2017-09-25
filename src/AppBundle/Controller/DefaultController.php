@@ -10,6 +10,10 @@ use AppBundle\Form\MesaType;
 use AppBundle\Form\ProdutoType;
 use AppBundle\Entity\Produto;
 use AppBundle\Entity\Sementeira;
+use AppBundle\Entity\Tanque;
+use AppBundle\Form\TanqueType;
+use AppBundle\Entity\Nutriente;
+use AppBundle\Form\NutrienteType;
 use AppBundle\Form\SementeiraType;
 use AppBundle\Entity\Ciclo;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -41,6 +45,208 @@ class DefaultController extends Controller
         ));
     }
 
+
+    public function nutrientesAction(Request $request)
+    {
+        $nutrientes = $this->getDoctrine()
+        ->getRepository(Nutriente::class)
+        ->findAll();
+   
+         return $this->render('default/nutrientes.html.twig', array(
+            'nutrientes' => $nutrientes
+        ));
+    }
+
+    public function nutrienteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $nutriente = $em->getDoctrine()
+        ->getRepository(Nutriente::class)
+        ->findOneById($id);
+   
+        if(null !== $nutriente){
+
+            $form = $this->createForm(NutrienteType::class, $nutriente);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                dump($nutriente);exit;
+                try{
+
+                    $em->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Nutriente actualizado!'
+                    );
+                    
+                }
+                catch(\Exception $e){
+
+                    error_log($e->getMessage());
+
+                    $this->addFlash(
+                        'danger',
+                        $e->getMessage()
+                    );
+                }
+
+                return $this->redirect($request->getUri());
+            }
+
+        }
+
+        return $this->render('default/nutriente.html.twig', array(
+            'nutriente' => $nutriente,
+        ));
+    }
+
+    public function addNutrienteAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $nutriente = new Nutriente();
+
+        $form = $this->createForm(NutrienteType::class, $nutriente);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            try{
+
+                $em->persist($nutriente);
+
+                $em->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Nutriente criado!'
+                );
+
+            }
+            catch(\Exception $e){
+
+                error_log($e->getMessage());
+
+                $this->addFlash(
+                    'danger',
+                    $e->getMessage()
+                );
+
+            }
+  
+        }
+
+         return $this->render('default/nutriente.html.twig', array(
+            'form' => $form->createView(),
+            'nutriente' => $nutriente,
+        ));
+    }
+
+
+    public function tanquesAction(Request $request)
+    {
+        $tanques = $this->getDoctrine()
+        ->getRepository(Tanque::class)
+        ->findAll();
+   
+         return $this->render('default/tanques.html.twig', array(
+            'tanques' => $tanques
+        ));
+    }
+
+    public function tanqueAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $tanque = $em
+        ->getRepository(Tanque::class)
+        ->findOneById($id);
+        
+        if(null !== $tanque){
+
+            $form = $this->createForm(TanqueType::class, $tanque);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try{
+
+                    $em->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Tanque actualizado!'
+                    );
+                    
+                }
+                catch(\Exception $e){
+
+                    error_log($e->getMessage());
+
+                    $this->addFlash(
+                        'danger',
+                        $e->getMessage()
+                    );
+                }
+
+                return $this->redirect($request->getUri());
+            }
+
+        }
+
+        return $this->render('default/tanque.html.twig', array(
+            'form' => $form->createView(),
+            'tanque' => $tanque,
+        ));
+    }
+
+    public function addTanqueAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $tanque = new Tanque();
+
+        $form = $this->createForm(TanqueType::class, $tanque);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            try{
+
+                $em->persist($tanque);
+
+                $em->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Tanque criado!'
+                );
+
+            }
+            catch(\Exception $e){
+
+                error_log($e->getMessage());
+
+                $this->addFlash(
+                    'danger',
+                    $e->getMessage()
+                );
+
+            }
+  
+        }
+
+         return $this->render('default/tanque.html.twig', array(
+            'form' => $form->createView(),
+            'tanque' => $tanque,
+        ));
+    }
+
     public function produtosAction(Request $request)
     {
         $produtos = $this->getDoctrine()
@@ -49,6 +255,52 @@ class DefaultController extends Controller
    
          return $this->render('default/produtos.html.twig', array(
             'produtos' => $produtos,
+        ));
+    }
+
+    public function produtoAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $produto = $em
+        ->getRepository(Produto::class)
+        ->findOneById($id);
+  
+        if(null !== $produto){
+
+            $form = $this->createForm(ProdutoType::class, $produto);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try{
+
+                    $em->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Produto actualizado!'
+                    );
+                    
+                }
+                catch(\Exception $e){
+
+                    error_log($e->getMessage());
+
+                    $this->addFlash(
+                        'danger',
+                        $e->getMessage()
+                    );
+                }
+
+                return $this->redirect($request->getUri());
+            }
+
+        }
+
+         return $this->render('default/produto.html.twig', array(
+            'form' => $form->createView(),
+            'produto' => $produto,
         ));
     }
 
@@ -106,52 +358,6 @@ class DefaultController extends Controller
         ));
     }
 
-
-    public function produtoAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $produto = $em
-        ->getRepository(Produto::class)
-        ->findOneById($id);
-  
-        if(null !== $produto){
-
-            $form = $this->createForm(ProdutoType::class, $produto);
-
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                try{
-
-                    $em->flush();
-
-                    $this->addFlash(
-                        'success',
-                        'Produto actualizado!'
-                    );
-                    
-                }
-                catch(\Exception $e){
-
-                    error_log($e->getMessage());
-
-                    $this->addFlash(
-                        'danger',
-                        $e->getMessage()
-                    );
-                }
-
-                return $this->redirect($request->getUri());
-            }
-
-        }
-
-         return $this->render('default/produto.html.twig', array(
-            'form' => $form->createView(),
-            'produto' => $produto,
-        ));
-    }
 
     public function sementeiraAction(Request $request, $id)
     {

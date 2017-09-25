@@ -27,6 +27,10 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
+homepage:
+    path: /
+    defaults:  { _controller: AppBundle:Default:index }    
+
 estufa:
     path: /estufa/{type}
     defaults:  { _controller: AppBundle:Default:estufa }
@@ -58,6 +62,30 @@ sementeiras:
 add_sementeira:
     path: /sementeira/add
     defaults:  { _controller: AppBundle:Default:addSementeira }
+
+tanque:
+    path: /tanques/{id}
+    defaults:  { _controller: AppBundle:Default:tanque }
+
+tanques:
+    path: /tanques
+    defaults:  { _controller: AppBundle:Default:tanques }
+
+add_tanque:
+    path: /tanque/add
+    defaults:  { _controller: AppBundle:Default:addTanque }
+
+nutriente:
+    path: /nutrientes/{id}
+    defaults:  { _controller: AppBundle:Default:nutriente }
+
+nutrientes:
+    path: /nutrientes
+    defaults:  { _controller: AppBundle:Default:nutrientes }
+
+add_nutriente:
+    path: /nutriente/add
+    defaults:  { _controller: AppBundle:Default:addNutriente }
 
 export_mesas:
     path: /mesas/export

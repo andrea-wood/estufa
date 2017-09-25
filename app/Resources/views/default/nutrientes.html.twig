@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li class="active">Nutrientes</li>
+    </ol>
+    
+    <div class="content">
+  		<h3>Nutrientes</h3>
+  		<hr>
+      
+      <div class="jumbotron">
+        {% if nutrientes is not empty %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nome do nutriente</th><th>Operações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for nutriente in nutrientes %}
+              <tr>
+                <td><span class="glyphicon glyphicon-oil" aria-hidden="true"></span> <a href="{{ path('nutriente', {'id': nutriente.id }) }}" >{{ nutriente.name }}</a></td>
+                <td><a href="{{ path('nutriente', {'id': nutriente.id }) }}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+              </tr> 
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+        <a href="{{ path('add_nutriente') }}" role="button" class="btn btn-primary add_nutriente_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um nutriente</a>
+      </div>
+      
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}
+

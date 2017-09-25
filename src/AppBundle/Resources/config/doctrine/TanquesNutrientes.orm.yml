@@ -1,0 +1,34 @@
+AppBundle\Entity\TanquesNutrientes:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\TanquesNutrientesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+        kg:
+            type: integer
+            options:
+                default: 0
+    manyToOne:
+        tanque:
+          targetEntity: Tanque
+          inversedBy: nutrientes
+          joinColumn:
+            name: tanque_id
+            referencedColumnName: id
+        nutriente:
+          targetEntity: Nutriente
+          joinColumn:
+            name: nutriente_id
+            referencedColumnName: id
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAt,setUpdatedAt ]
+        preUpdate: [ setUpdatedAt ]

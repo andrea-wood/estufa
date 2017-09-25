@@ -87,7 +87,19 @@
                 </li>
                 <li {% if app.request.attributes.get('_route') == 'produtos' %}class="active"{% endif %}><a href="{{ path('produtos') }}">Produtos</a></li>
                 <li {% if app.request.attributes.get('_route') == 'sementeiras' %}class="active"{% endif %}><a href="{{ path('sementeiras') }}">Sementeira</a></li>
-                <!-- <li><a href="#">Contact</a></li> -->
+                <li class="dropdown {% if 'tanques' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tanques <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{{ path('tanques') }}">Lista de tanques</a></li>
+                    <li><a href="{{ path('nutrientes') }}">Nutrientes</a></li>
+ <!--                <li class="dropdown-header"></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li> -->
+                  </ul>
+                </li>
                 <li {% if app.request.attributes.get('_route') == 'qrcode' %}class="active"{% endif %}><a href="{{ path('qrcode') }}">Qrcode</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">  

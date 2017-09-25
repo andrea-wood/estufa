@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li class="active">Tanques</li>
+    </ol>
+    
+    <div class="content">
+  		<h3>Tanques</h3>
+  		<hr>
+      
+      <div class="jumbotron">
+        {% if tanques is not empty %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nome do tanque</th><th>Operações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tanque in tanques %}
+              <tr>
+                <td><span class="glyphicon glyphicon-tint" aria-hidden="true"></span> <a href="{{ path('tanque', {'id': tanque.id }) }}" >{{ tanque.name }}</a></td>
+                <td><a href="{{ path('tanque', {'id': tanque.id }) }}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+              </tr> 
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+        <a href="{{ path('add_tanque') }}" role="button" class="btn btn-primary add_tanque_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um tanque</a>
+      </div>
+      
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}
+

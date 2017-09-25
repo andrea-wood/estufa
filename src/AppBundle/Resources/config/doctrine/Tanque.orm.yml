@@ -1,0 +1,21 @@
+AppBundle\Entity\Tanque:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\TanqueRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    oneToMany:
+        nutrientes:
+            targetEntity: TanquesNutrientes
+            mappedBy: tanque
+            cascade:      [persist]
+    lifecycleCallbacks: {  }
+
