@@ -15,20 +15,22 @@ AppBundle\Entity\TanquesNutrientes:
             type: datetime
         kg:
             type: integer
+            nullable: true
             options:
                 default: 0
     manyToOne:
         tanque:
-          targetEntity: Tanque
-          inversedBy: nutrientes
-          joinColumn:
-            name: tanque_id
-            referencedColumnName: id
+            targetEntity: Tanque
+            inversedBy: nutrientes
+            joinColumn:
+                name: tanque_id
+                referencedColumnName: id
         nutriente:
-          targetEntity: Nutriente
-          joinColumn:
-            name: nutriente_id
-            referencedColumnName: id
+            targetEntity: Nutriente
+            cascade:      [persist]
+            joinColumn:
+                name: nutriente_id
+                referencedColumnName: id
     lifecycleCallbacks:
         prePersist: [ setCreatedAt,setUpdatedAt ]
         preUpdate: [ setUpdatedAt ]

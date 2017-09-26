@@ -22,7 +22,7 @@
             <ul>
               {% for tratamento in ciclo.tratamentos %}
               <li {% if "now"|date('Y-m-d') <= tratamento.getExpirationDate()|date('Y-m-d') %}class="text-danger"{% else %}class="text-success"{% endif %}>
-                <b>{{ tratamento.produto.name }}</b>  ( Creação : {{ tratamento.createdAt|date("d/m/Y") }} / Expiração : {{tratamento.getExpirationDate()|date("d/m/Y")}} )
+                <b><a href="{{ path('produto', {'id': tratamento.produto.id }) }}" class="text-danger">{{ tratamento.produto.name }}</a></b>  ( Creação : {{ tratamento.createdAt|date("d/m/Y") }} / Expiração : {{tratamento.getExpirationDate()|date("d/m/Y")}} )
               </li>
               {% endfor %}
             </ul>
@@ -91,9 +91,9 @@
 
     var $collectionHolderColheitas;
 
-    var $addTratamentoLink = $('<button type="button" class="btn btn-primary add_tratamento_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um tratamento</button>');
+    var $addTratamentoLink = $('<div class="form-class text-center"><button type="button" class="btn btn-primary add_tratamento_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um tratamento</button></div>');
 
-    var $addColheitaLink = $('<button type="button" class="btn btn-primary add_colheita_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma colheita</button>');
+    var $addColheitaLink = $('<div class="form-class text-center"><button type="button" class="btn btn-primary add_colheita_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma colheita</button></div>');
 
     var $newTratamentoLinkLi = $addTratamentoLink;
 
@@ -149,9 +149,11 @@
 
         $collectionHolderTratamentos.data('index', index + 1);
 
-        var $newFormLi = $('<li></li>').append(newForm);
+        var $newFormDiv = $(newForm);
 
-        $newTratamentoLinkLi.before($newFormLi);
+        addFormDeleteLink($newFormDiv.find('.collection-box'));
+
+        $newTratamentoLinkLi.before($newFormDiv);
 
       }
 
@@ -166,10 +168,27 @@
 
         $collectionHolderColheitas.data('index', index + 1);
 
-        var $newFormLi = $('<li></li>').append(newForm);
+        var $newFormDiv = $(newForm);
 
-        $newColheitaLinkLi.before($newFormLi);
+        addFormDeleteLink($newFormDiv.find('.collection-box'));
+        
+        $newColheitaLinkLi.before($newFormDiv);
 
+      }
+
+
+      function addFormDeleteLink($Form) {
+
+          var $removeFormA = $('<div class="form-class text-center"><a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Eliminar tratamento</a></div>');
+
+          $Form.append($removeFormA);
+
+          $removeFormA.on('click', function(e) {
+
+              e.preventDefault();
+
+              $Form.parent().remove();
+          });
       }
 
     </script>

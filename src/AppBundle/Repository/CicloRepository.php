@@ -34,4 +34,16 @@ class CicloRepository extends \Doctrine\ORM\EntityRepository
 			dump($e);exit;
 		}
     }
+
+    public function findFirst() {
+
+		$qb = $this->createQueryBuilder('c');
+
+		$qb->setMaxResults( 1 );
+
+		$qb->orderBy('c.createdAt', 'ASC');
+
+		return $qb->getQuery()->getSingleResult();
+	}
+
 }

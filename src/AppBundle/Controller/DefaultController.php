@@ -72,7 +72,7 @@ class DefaultController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                dump($nutriente);exit;
+                
                 try{
 
                     $em->flush();
@@ -173,6 +173,7 @@ class DefaultController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+          
                 try{
 
                     $em->flush();
@@ -347,7 +348,7 @@ class DefaultController extends Controller
         ));
     }
 
-    public function sementeirasAction(Request $request)
+    public function sementesAction(Request $request)
     {
         $sementeiras = $this->getDoctrine()
         ->getRepository(Sementeira::class)
@@ -359,7 +360,7 @@ class DefaultController extends Controller
     }
 
 
-    public function sementeiraAction(Request $request, $id)
+    public function sementeAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -380,7 +381,7 @@ class DefaultController extends Controller
 
                     $this->addFlash(
                         'success',
-                        'Sementeira actualizado!'
+                        'Semente actualizado!'
                     );
                     
                 }
@@ -405,7 +406,7 @@ class DefaultController extends Controller
         ));
     }
 
-    public function addSementeiraAction(Request $request)
+    public function addSementeAction(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
         
@@ -425,7 +426,7 @@ class DefaultController extends Controller
 
                 $this->addFlash(
                     'success',
-                    'Sementeira criada!'
+                    'Semente criada!'
                 );
 
             }
@@ -532,9 +533,44 @@ class DefaultController extends Controller
 
         $groupedCiclos = null;
 
+        $groupedByMonths = null;
+
+        $firstCiclo = $this->getDoctrine()
+                    ->getRepository(Ciclo::class)
+                    ->findFirst();
+
         $allCiclos = $this->getDoctrine()
-        ->getRepository(Ciclo::class)
-        ->findAll();
+                    ->getRepository(Ciclo::class)
+                    ->findAll();
+
+        $daterange = (new \DatePeriod($firstCiclo->getCreatedAt(), (new \DateInterval('P1M')), (new \Datetime("now"))));
+
+        foreach($daterange as $range){
+
+            $groupedByMonths[$range->format("Y")][$range->format("m")] = array();
+            
+        }
+
+        foreach($allCiclos as $ciclo){
+
+            if($ciclo->getIsActive()){
+
+                $ciclorange = (new \DatePeriod($ciclo->getCreatedAt(), (new \DateInterval('P1M')), (new \Datetime("now"))));
+            
+            } else {
+
+                $ciclorange = (new \DatePeriod($ciclo->getCreatedAt(), (new \DateInterval('P1M')), $ciclo->getEndedAt()));
+
+            }
+            
+            
+            foreach($ciclorange as $range){
+
+                $groupedByMonths[$range->format("Y")][$range->format("m")][] = $ciclo;
+            
+            }
+        }
+
 
         foreach($allCiclos as $ciclo){
 
@@ -579,7 +615,8 @@ class DefaultController extends Controller
          return $this->render('default/export.html.twig', array(
             'form' => $form->createView(),
             'ciclos' => $ciclos,
-            'groupedCiclos' => $groupedCiclos
+            'groupedCiclos' => $groupedCiclos,
+            'groupedByMonths' => $groupedByMonths
         ));
     }
 
@@ -595,6 +632,24 @@ class DefaultController extends Controller
             'header' => 'Estufa da ' . $ciclo->getMesa()->getType() . ' ' . $ciclo->getMesa()->getName(),
         ));
     }
+
+    public function exportMonthAction(Request $request, $id, $month, $year)
+    {
+        $ciclo = $this->getDoctrine()
+        ->getRepository(Ciclo::class)
+        ->findOneById($id);
+       
+        $date = (new \DateTime());
+
+        $date->setDate($year, $month, 01);
+
+         return $this->render('print/month.html.twig', array(
+            'ciclo' => $ciclo,
+            'date' => $date,
+            'header' => 'Estufa da ' . $ciclo->getMesa()->getType() . ' ' . $ciclo->getMesa()->getName(),
+        ));
+    }
+    
 
     public function qrcodeListAction(Request $request)
     {

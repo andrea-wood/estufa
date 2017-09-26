@@ -44,7 +44,8 @@ class TanquesNutrientesType extends AbstractType
                     'placeholder' => 'Escolher um nutriente',
                     'choice_label' => 'name',
                     'empty_data'  => null,
-                    'preferred_choices' => array(null)
+                    'preferred_choices' => array(null),
+                    'disabled' => true
                 ));
 
                 if($data->getNutriente()->getId() !== 1){ // water
@@ -52,6 +53,7 @@ class TanquesNutrientesType extends AbstractType
                     $form->add('kg', TextType::class, array(
                         'required' => false,
                         'label' => "Quilos",
+                        'disabled' => true
                     ));
 
                 }

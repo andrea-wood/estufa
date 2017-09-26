@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TanqueType extends AbstractType
 {
@@ -25,7 +26,8 @@ class TanqueType extends AbstractType
                 'label' => false,
                 'attr'      => array('class' => 'collection-box bg-info')
             ),
-        ));
+        ))
+        ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'));
     }
     
     /**

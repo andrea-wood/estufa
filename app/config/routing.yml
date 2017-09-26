@@ -51,17 +51,17 @@ add_produto:
     path: /produto/add
     defaults:  { _controller: AppBundle:Default:addProduto }
 
-sementeira:
-    path: /sementeiras/{id}
-    defaults:  { _controller: AppBundle:Default:sementeira }
+semente:
+    path: /sementes/{id}
+    defaults:  { _controller: AppBundle:Default:semente }
 
-sementeiras:
-    path: /sementeiras
-    defaults:  { _controller: AppBundle:Default:sementeiras }
+sementes:
+    path: /sementes
+    defaults:  { _controller: AppBundle:Default:sementes }
 
-add_sementeira:
-    path: /sementeira/add
-    defaults:  { _controller: AppBundle:Default:addSementeira }
+add_semente:
+    path: /semente/add
+    defaults:  { _controller: AppBundle:Default:addSemente }
 
 tanque:
     path: /tanques/{id}
@@ -94,6 +94,10 @@ export_mesas:
 print_ciclo:
     path: /mesas/export/ciclos/print/{id}
     defaults:  { _controller: AppBundle:Default:exportCiclo }
+
+print_month:
+    path: /mesas/export/ciclos/print/{id}/year/{year}/month/{month}
+    defaults:  { _controller: AppBundle:Default:exportMonth }
 
 qrcode:
     path: /qrcode/list

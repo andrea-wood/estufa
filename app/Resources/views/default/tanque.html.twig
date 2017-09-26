@@ -16,18 +16,46 @@
   		<h3>{{ tanque.name }}</h3>
   		<hr>
       <div class="jumbotron">
-      {{ form_start(form) }}
-      {{ form_widget(form) }}
-      <hr>
-      <div class="form-group"><button type="submit" class="save btn">Save</button></div>
-      {{ form_rest(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        <hr>
+        {{ form_row(form.nutrientes) }}
+        <hr>
+        <div class="text-center" style="padding:20px;">
+          {{ form_row(form.save) }}
+        </div>
+        {{ form_rest(form) }}
+      </div>
+      <div class="jumbotron">
+          <h3>Lista nutrientes</h3>
+          <hr>
+          {% if tanque.nutrientes is not empty %}
+          <div class="table-responsive">
+              <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Nutriente</th><th>Quilos</th><th>Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for nutriente in tanque.nutrientes %}
+                    <tr>
+                      <td>{{ nutriente.nutriente.name }}</td>
+                      <td>{% if nutriente.kg is not empty %}{{ nutriente.kg }} kg{% endif %}</td>
+                      <td>{{ nutriente.createdAt|date("d/m/Y") }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+          {% endif %}
       </div>
     </div>
    <script>
 
     var $collectionHolderNutrientes;
 
-    var $addNutrienteLink = $('<button type="button" class="btn btn-primary add_nutriente_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um nutriente</button>');
+    var $addNutrienteLink = $('<div class="form-class text-center"><button type="button" class="btn btn-primary add_nutriente_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um nutriente</button></div>');
 
     var $newNutrienteLinkLi = $addNutrienteLink;
 
@@ -37,13 +65,13 @@
          
           $collectionHolderNutrientes.append($newNutrienteLinkLi);
 
-          $collectionHolderNutrientes.data('index', $collectionHolderNutrientes.find(':input').length);
+          $collectionHolderNutrientes.data('index', $collectionHolderNutrientes.find(".collection-box").length);
 
-          $collectionHolderNutrientes.find('.collection-box').each(function() {
-
-              addNutrienteFormDeleteLink($(this));
+          //$collectionHolderNutrientes.find('.collection-box').each(function() {
+          //
+          //    addNutrienteFormDeleteLink($(this));
           
-          });
+          //});
           
           $addNutrienteLink.on('click', function(e) {
 
@@ -51,15 +79,6 @@
 
               addNutrienteForm($collectionHolderNutrientes, $newNutrienteLinkLi);
               
-          });
-
-          $("#confirm").on("click", function(){
-              $("#appbundle_mesa_close").unbind('click');
-              $("#appbundle_mesa_close").trigger('click');
-          });
-
-          $("#appbundle_mesa_close").on("click", function(e){
-              e.preventDefault();
           });
 
       });
@@ -84,7 +103,7 @@
 
       function addNutrienteFormDeleteLink($NutrienteForm) {
 
-          var $removeFormA = $('<div class="form-class text-center"><a href="#"><span class="glyphicon glyphicon-minus text-danger" aria-hidden="true"></span></a></div>');
+          var $removeFormA = $('<div class="form-class text-center"><a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Eliminar nutriente</a></div>');
 
           $NutrienteForm.append($removeFormA);
 

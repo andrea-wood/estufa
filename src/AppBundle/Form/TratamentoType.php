@@ -19,15 +19,11 @@ class TratamentoType extends AbstractType
         $builder
         ->add('produto', EntityType::class, array(
             'label' => false,
-            // query choices from this entity
             'class' => 'AppBundle:Produto',
-
-            // use the User.username property as the visible option string
+            'placeholder' => 'Escolher um produto',
             'choice_label' => 'name',
-
-            // used to render a select box, check boxes or radios
-            // 'multiple' => true,
-            // 'expanded' => true,
+            'empty_data'  => null,
+            'preferred_choices' => array(null)
         ));
     }
     

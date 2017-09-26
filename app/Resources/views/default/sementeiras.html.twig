@@ -2,29 +2,30 @@
 {% block body %}
     <ol class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Home</a></li>
-      <li class="active">Sementeiras</li>
+      <li class="active">Sementes</li>
     </ol>
     
     <div class="content">
-  		<h3>Sementeiras</h3>
+  		<h3>Sementes</h3>
   		<hr>
       <div class="jumbotron">
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Nome da sementeira</th><th>Ultima atualização</th>
+              <th>Nome da semente</th><th>Ultima atualização</th><th>Operações</th>
             </tr>
           </thead>
           <tbody>
             {% for sementeira in sementeiras %}
               <tr>
-                <td><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> <a href="{{ path('sementeira', {'id': sementeira.id }) }}" >{{ sementeira.name }}</a></td>
+                <td><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> <a href="{{ path('semente', {'id': sementeira.id }) }}" >{{ sementeira.name }}</a></td>
                 <td>{{ sementeira.updatedAt|date("d/m/Y - H:i") }}</td>
+                <td><a href="{{ path('semente', {'id': sementeira.id }) }}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
               </tr> 
             {% endfor %}
           </tbody>
         </table>
-        <a href="{{ path('add_sementeira') }}" role="button" class="btn btn-primary add_sementeira_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma sementeira</a>
+        <a href="{{ path('add_semente') }}" role="button" class="btn btn-primary add_sementeira_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma sementeira</a>
       </div>
     </div>
 {% endblock %}
