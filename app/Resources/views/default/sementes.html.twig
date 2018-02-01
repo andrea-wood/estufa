@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Home</a></li>
+      <li class="active">Sementeiras</li>
+    </ol>
+    
+    <div class="content">
+  		<h3>Sementes</h3>
+  		<hr>
+      <div class="jumbotron">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nome da semente</th><th>Ultima atualização</th><th>Operações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for semente in sementes %}
+              <tr>
+                <td><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> <a href="{{ path('semente', {'id': semente.id }) }}" >{{ semente.name }}</a></td>
+                <td>{{ semente.updatedAt|date("d/m/Y - H:i") }}</td>
+                <td><a href="{{ path('semente', {'id': semente.id }) }}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+              </tr> 
+            {% endfor %}
+          </tbody>
+        </table>
+        <a href="{{ path('add_semente') }}" role="button" class="btn btn-primary add_semente_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma tipo de semente</a>
+      </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}
+

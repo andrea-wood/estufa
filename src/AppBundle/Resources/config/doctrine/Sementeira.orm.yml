@@ -9,12 +9,25 @@ AppBundle\Entity\Sementeira:
             generator:
                 strategy: AUTO
     fields:
-        name:
-            type: string
-            length: 255
-            unique: true
-        updatedAt:
+        createdAt:
             type: datetime
-    lifecycleCallbacks: 
-        prePersist: [ setUpdatedAt]
-        preUpdate: [ setUpdatedAt ]
+        endedAt:
+            type: datetime
+            nullable: true
+        quantitade:
+            type: integer
+    manyToOne:
+        type:
+            targetEntity: Semente
+            cascade:      [persist]
+            joinColumn:
+                name: semente_id
+                referencedColumnName: id
+    oneToOne:
+      ciclo:
+        targetEntity: Ciclo
+        inversedBy: sementeira
+        joinColumn:
+          name: ciclo_id
+          referencedColumnName: id
+          nullable: true

@@ -40,11 +40,17 @@ AppBundle\Entity\Ciclo:
                 name: mesa_id
                 referencedColumnName: id
         type:
-            targetEntity: Sementeira
+            targetEntity: Semente
             cascade:      [persist]
             joinColumn:
-                name: sementeira_id
+                name: semente_id
                 referencedColumnName: id
+                nullable: true
+    oneToOne:
+      sementeira:
+        targetEntity: Sementeira
+        mappedBy: ciclo
+        
     lifecycleCallbacks:
         prePersist: [ setCreatedAt,setUpdatedAt, setInitialEndedAt]
         preUpdate: [ setUpdatedAt ]

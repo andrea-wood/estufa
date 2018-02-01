@@ -13,16 +13,30 @@ class Sementeira
     private $id;
 
     /**
-     * @var string
+     * @var \DateTime
      */
-    private $name;
+    private $createdAt;
 
     /**
      * @var \DateTime
      */
     private $updatedAt;
 
+    /**
+     * @var integer
+     */
+    private $quantitade;
 
+    /**
+     * @var \AppBundle\Entity\Semente
+     */
+    private $type;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+    
     /**
      * Get id
      *
@@ -34,27 +48,27 @@ class Sementeira
     }
 
     /**
-     * Set name
+     * Set createdAt
      *
-     * @param string $name
+     * @param \DateTime $createdAt
      *
      * @return Sementeira
      */
-    public function setName($name)
+    public function setCreatedAt($createdAt)
     {
-        $this->name = $name;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get createdAt
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getName()
+    public function getCreatedAt()
     {
-        return $this->name;
+        return $this->createdAt;
     }
 
     /**
@@ -66,7 +80,7 @@ class Sementeira
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt = (new \DateTime());
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -79,5 +93,82 @@ class Sementeira
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set quantitade
+     *
+     * @param integer $quantitade
+     *
+     * @return Sementeira
+     */
+    public function setQuantitade($quantitade)
+    {
+        $this->quantitade = $quantitade;
+
+        return $this;
+    }
+
+    /**
+     * Get quantitade
+     *
+     * @return integer
+     */
+    public function getQuantitade()
+    {
+        return $this->quantitade;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \AppBundle\Entity\Semente $type
+     *
+     * @return Sementeira
+     */
+    public function setType(\AppBundle\Entity\Semente $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \AppBundle\Entity\Semente
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+    /**
+     * @var \AppBundle\Entity\Ciclo
+     */
+    private $ciclo;
+
+
+    /**
+     * Set ciclo
+     *
+     * @param \AppBundle\Entity\Ciclo $ciclo
+     *
+     * @return Sementeira
+     */
+    public function setCiclo(\AppBundle\Entity\Ciclo $ciclo = null)
+    {
+        $this->ciclo = $ciclo;
+
+        return $this;
+    }
+
+    /**
+     * Get ciclo
+     *
+     * @return \AppBundle\Entity\Ciclo
+     */
+    public function getCiclo()
+    {
+        return $this->ciclo;
     }
 }

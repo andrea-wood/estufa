@@ -1,0 +1,20 @@
+AppBundle\Entity\Semente:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\SementeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            unique: true
+        updatedAt:
+            type: datetime
+    lifecycleCallbacks: 
+        prePersist: [ setUpdatedAt]
+        preUpdate: [ setUpdatedAt ]

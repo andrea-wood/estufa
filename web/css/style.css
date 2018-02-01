@@ -41,7 +41,7 @@
 form li {
 	list-style: none;
 }
- form .collection-box{
- 	border-top: 1px solid #b5aeae;
-    padding: 20px;	
- }
+form .collection-box{
+	border-top: 1px solid #b5aeae;
+   	padding: 20px;	
+}

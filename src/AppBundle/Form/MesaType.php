@@ -55,7 +55,7 @@ class MesaType extends AbstractType
             $mesa = $event->getData();
                 
             $form = $event->getForm();
-
+ 
             if(null === $mesa->getCiclo()){
 
                 $form         
@@ -77,13 +77,13 @@ class MesaType extends AbstractType
                 if($mesa->getStatus() === 1){
 
                     $form
-                    ->add('ciclo', CicloColheitasType::class, array('label' => 'Colheitas'));
+                    ->add('ciclo', CicloColheitasType::class, array('label' => 'COLHEITAS'));
 
 
                 } elseif($mesa->getStatus() === 2){
 
                     $form
-                    ->add('ciclo', CicloTratamentosType::class, array('label' => 'Tratamentos'));
+                    ->add('ciclo', CicloTratamentosType::class, array('label' => 'TRATAMENTOS'));
 
                 }
                 

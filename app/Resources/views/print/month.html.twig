@@ -41,7 +41,13 @@
                   <td>{{ ciclo.type.name|upper }}</td>
                 </tr>
                 <tr>
-                  <td>{{ciclo.createdAt|date('d/m/Y')}}</td>
+                  <td>
+                  	{%  if ciclo.sementeira is not null %}
+                          {{ ciclo.sementeira.createdAt|date('d/m/Y') }}
+                    {%  else %}
+                    	 {{ ciclo.createdAt|date('d/m/Y') }}
+                    {%  endif %}
+                  </td>
                   <td>Dia</td>
                 </tr>
                 {% for index, day in range(1, month.daysInMonth) %}

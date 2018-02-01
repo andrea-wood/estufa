@@ -73,6 +73,8 @@ class Nutriente
      */
     public function addTanque(\AppBundle\Entity\TanquesNutrientes $tanque)
     {
+        $tanque->setNutriente($this);
+        
         $this->tanques[] = $tanque;
 
         return $this;

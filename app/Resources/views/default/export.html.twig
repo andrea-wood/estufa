@@ -25,7 +25,7 @@
         <table class="table table-striped">
             <thead>
               <tr>
-                <th>#</th><th>Mesa</th><th>Estufa</th><th>Tipo</th><th>Sementeira</th><th></th>
+                <th>#</th><th>Mesa</th><th>Estufa</th><th>Sementes</th><th>Sementeira</th><th></th>
               </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@
                   <td>{{ ciclo.mesa.type }}</td>
                   <td>
                     <span class="glyphicon glyphicon-leaf"></span> 
-                   {{ ciclo.type.name|upper }}
+					 {{ ciclo.type.name|upper  }}
                   </td>
                   <td><span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="Sementeira: {{ ciclo.createdAt|date("d/m/Y", "Europe/Lisbon") }} / {{ ciclo.endedAt|date("d/m/Y", "Europe/Lisbon") }}"></span></td>
                   <td><a href="{{ path('print_ciclo', {'id': ciclo.id }) }}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>
@@ -55,51 +55,56 @@
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
           {% for year, months in groupedByMonths %}
           <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="heading{{  year }}">
+            <div class="panel-heading" role="tab" id="heading-mes-{{  year }}">
               <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{  year }}" aria-expanded="false">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-mes-{{  year }}" aria-expanded="false">
                   <b>Ano {{  year }}</b>
                 </a>
               </h4>
             </div>
-            <div id="collapse{{  year }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{  year }}">
+            <div id="collapse-mes-{{  year }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-mes-{{  year }}">
               <div class="panel-body">
   
-                <div class="panel-group" id="accordion{{  year }}" role="tablist" aria-multiselectable="false">
+                <div class="panel-group" id="accordion-mes-{{  year }}" role="tablist" aria-multiselectable="false">
                  {% for month, ciclos in months %}
                   <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="heading{{  year }}-{{  month }}">
+                    <div class="panel-heading" role="tab" id="heading-mes-{{  year }}-{{  month }}">
                       <h4 class="panel-title">
-                        <a role="button" data-toggle="collapse" data-parent="#accordion{{  year }}" href="#collapse{{  year }}-{{  month }}" aria-expanded="false">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion-mes-{{  year }}" href="#collapse-mes-{{  year }}-{{  month }}" aria-expanded="false">
                          <b>Mês {{  month }}</b>
                         </a>
                       </h4>
                     </div>
-                    <div id="collapse{{  year }}-{{  month }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{  year }}-{{  month }}">
+                    <div id="collapse-mes-{{  year }}-{{  month }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-mes-{{  year }}-{{  month }}">
                       <div class="panel-body">
                         {% if ciclos is not empty %}
                         <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                               <tr>
-                                <th>Mesa</th><th>Estufa</th><th>Tipo</th><th>Sementeira</th><th></th>
+                                <th>Mesa</th><th>Ciclo</th><th>Estufa</th><th>Sementes</th><th>Sementeira</th><th>Plantaçao</th><th>Final do ciclo</th><th></th>
                               </tr>
                             </thead>
                             <tbody>
                               {% for ciclo in ciclos %}
                                 <tr {% if ciclo.isActive == false %}class="warning"{% endif %}>
                                   <td><a href="{{ path('mesa', {'id': ciclo.mesa.id, 'type' :  ciclo.mesa.type }) }}" target="_blank">{{ ciclo.mesa.name }}</a></td>
+                                  <td>{{ ciclo.id }}</td>
                                   <td>{{ ciclo.mesa.type }}</td>
                                   <td>
                                     <span class="glyphicon glyphicon-leaf"></span> 
-                                   {{ ciclo.type.name|upper }}
+                					{{ ciclo.type.name|upper  }}
                                   </td>
-                                  {% if ciclo.isActive %}
-                                    {% set title = ciclo.createdAt|date("d/m/Y") ~  " / ..."  %}
-                                  {% else %}
-                                    {% set title = ciclo.createdAt|date("d/m/Y") ~  " / " ~ ciclo.endedAt|date("d/m/Y") %}
-                                  {% endif %}
-                                  <td><span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="{{ title }}"></span></td>
+                                  <td>
+                                  	{% if ciclo.sementeira is not null  %}
+                                  		<span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="{{ ciclo.sementeira.createdAt|date("d/m/Y") }}"></span>
+                                  	{% endif %} 
+                                  </td>
+                                  <td><span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="{{ ciclo.createdAt|date("d/m/Y") }}"></span></td>
+                                  <td>
+                                    {% if ciclo.isActive == 0 %}
+                                  		<span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="right" title="{{ ciclo.endedAt|date("d/m/Y") }}"></span></td>
+                                  	{% endif %}
                                   <td>
                                     <a href="{{ path('print_month', {'year': year, 'month' : month, 'id': ciclo.id }) }}" target="_blank">
                                       <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
@@ -132,27 +137,27 @@
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
           {% for year, months in groupedCiclos %}
           <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="heading{{  year }}">
+            <div class="panel-heading" role="tab" id="heading-mesas-{{  year }}">
               <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{  year }}" aria-expanded="false">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-mesas-{{  year }}" aria-expanded="false">
                   <b>Ano {{  year }}</b>
                 </a>
               </h4>
             </div>
-            <div id="collapse{{  year }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{  year }}">
+            <div id="collapse-mesas-{{  year }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-mesas-{{  year }}">
               <div class="panel-body">
   
-                <div class="panel-group" id="accordion{{  year }}" role="tablist" aria-multiselectable="false">
+                <div class="panel-group" id="accordion-mesas-{{  year }}" role="tablist" aria-multiselectable="false">
                  {% for month, ciclos in months %}
                   <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="heading{{  year }}-{{  month }}">
                       <h4 class="panel-title">
-                        <a role="button" data-toggle="collapse" data-parent="#accordion{{  year }}" href="#collapse{{  year }}-{{  month }}" aria-expanded="false">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion-mesas-{{  year }}" href="#collapse-mesas-{{  year }}-{{  month }}" aria-expanded="false">
                          <b>Mês {{  month }}</b>
                         </a>
                       </h4>
                     </div>
-                    <div id="collapse{{  year }}-{{  month }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{  year }}-{{  month }}">
+                    <div id="collapse-mesas-{{  year }}-{{  month }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-mesas-{{  year }}-{{  month }}">
                       <div class="panel-body">
                         {% if ciclos is not empty %}
                         <div class="table-responsive">
@@ -169,7 +174,8 @@
                                   <td>{{ ciclo.mesa.type }}</td>
                                   <td>
                                     <span class="glyphicon glyphicon-leaf"></span> 
-                                   {{ ciclo.type.name|upper }}
+                					{% if ciclo.sementeira is not null  %} {{ ciclo.sementeira.type.name|upper  }} {% endif %} 
+                					{% if ciclo.type is not null  %} {{ ciclo.type.name|upper  }} {% endif %}
                                   </td>
                                   {% if ciclo.isActive %}
                                     {% set title = ciclo.createdAt|date("d/m/Y") ~  " / ..."  %}

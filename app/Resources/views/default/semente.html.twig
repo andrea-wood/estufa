@@ -2,8 +2,8 @@
 {% block body %}
     <ol class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Home</a></li>
-      <li><a href="{{ path('sementeiras') }}">Sementeiras</a></li>
-     
+      <li><a href="{{ path('sementes') }}">Sementes</a></li>
+      <li class="active">{{ semente.name }}</li>
     </ol>
     <div class="content">
       {% for label, messages in app.flashes %}
@@ -13,7 +13,7 @@
             </div>
         {% endfor %}
       {% endfor %}
-  		
+  		<h3>{{ semente.name }}</h3>
   		<hr>
       <div class="jumbotron">
       {{ form_start(form) }}

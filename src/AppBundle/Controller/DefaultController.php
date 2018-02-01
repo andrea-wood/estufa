@@ -9,11 +9,13 @@ use AppBundle\Entity\Mesa;
 use AppBundle\Form\MesaType;
 use AppBundle\Form\ProdutoType;
 use AppBundle\Entity\Produto;
+use AppBundle\Entity\Semente;
 use AppBundle\Entity\Sementeira;
 use AppBundle\Entity\Tanque;
 use AppBundle\Form\TanqueType;
 use AppBundle\Entity\Nutriente;
 use AppBundle\Form\NutrienteType;
+use AppBundle\Form\SementeType;
 use AppBundle\Form\SementeiraType;
 use AppBundle\Entity\Ciclo;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -350,27 +352,126 @@ class DefaultController extends Controller
 
     public function sementesAction(Request $request)
     {
-        $sementeiras = $this->getDoctrine()
-        ->getRepository(Sementeira::class)
+        $sementes = $this->getDoctrine()
+        ->getRepository(Semente::class)
         ->findAll();
    
-         return $this->render('default/sementeiras.html.twig', array(
-            'sementeiras' => $sementeiras,
+         return $this->render('default/sementes.html.twig', array(
+            'sementes' => $sementes,
         ));
     }
 
 
+    public function addSementeiraAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $sementeira = new Sementeira();
+        
+        $form = $this->createForm(SementeiraType::class, $sementeira);
+        
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            try{
+                
+                $em->persist($sementeira);
+                
+                $em->flush();
+                
+                $this->addFlash(
+                    'success',
+                    'Sementeira criada!'
+                    );
+                
+            }
+            catch(\Exception $e){
+                
+                error_log($e->getMessage());
+                
+                $this->addFlash(
+                    'danger',
+                    $e->getMessage()
+                    );
+                
+            }
+            
+        }
+        
+        return $this->render('default/sementeira.html.twig', array(
+            'form' => $form->createView(),
+            'sementeira' => $sementeira,
+        ));
+    }
+
+    public function sementeirasAction(Request $request)
+    {
+        $sementeiras = $this->getDoctrine()
+        ->getRepository(Sementeira::class)
+        ->findAll();
+        
+        return $this->render('default/sementeiras.html.twig', array(
+            'sementeiras' => $sementeiras,
+        ));
+    }
+ 
+    public function sementeiraAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $sementeira = $em
+        ->getRepository(Sementeira::class)
+        ->findOneById($id);
+        
+        if(null !== $sementeira){
+            
+            $form = $this->createForm(SementeiraType::class, $sementeira);
+            
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) {
+                try{
+                    
+                    $em->flush();
+                    
+                    $this->addFlash(
+                        'success',
+                        'Semente actualizado!'
+                        );
+                    
+                }
+                catch(\Exception $e){
+                    
+                    error_log($e->getMessage());
+                    
+                    $this->addFlash(
+                        'danger',
+                        $e->getMessage()
+                        );
+                }
+                
+                return $this->redirect($request->getUri());
+            }
+            
+        }
+        
+        return $this->render('default/sementeira.html.twig', array(
+            'form' => $form->createView(),
+            'sementeira' => $sementeira,
+        ));
+    }
+    
     public function sementeAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $sementeira = $em
-        ->getRepository(Sementeira::class)
+        $semente = $em
+        ->getRepository(Semente::class)
         ->findOneById($id);
   
-        if(null !== $sementeira){
+        if(null !== $semente){
 
-            $form = $this->createForm(SementeiraType::class, $sementeira);
+            $form = $this->createForm(SementeType::class, $semente);
 
             $form->handleRequest($request);
 
@@ -400,9 +501,9 @@ class DefaultController extends Controller
 
         }
 
-         return $this->render('default/sementeira.html.twig', array(
+         return $this->render('default/semente.html.twig', array(
             'form' => $form->createView(),
-            'sementeira' => $sementeira,
+            'semente' => $semente,
         ));
     }
 
@@ -410,9 +511,9 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         
-        $sementeira = new Sementeira();
+        $semente = new Semente();
 
-        $form = $this->createForm(SementeiraType::class, $sementeira);
+        $form = $this->createForm(SementeType::class, $semente);
 
         $form->handleRequest($request);
 
@@ -420,7 +521,7 @@ class DefaultController extends Controller
 
             try{
 
-                $em->persist($sementeira);
+                $em->persist($semente);
 
                 $em->flush();
 
@@ -443,9 +544,9 @@ class DefaultController extends Controller
   
         }
 
-         return $this->render('default/sementeira.html.twig', array(
+         return $this->render('default/semente.html.twig', array(
             'form' => $form->createView(),
-            'sementeira' => $sementeira,
+            'semente' => $semente,
         ));
     }
 
@@ -467,7 +568,7 @@ class DefaultController extends Controller
 
         }
         
-        //dump($ciclo);exit;
+    
         
         $form = $this->createForm(MesaType::class, $mesa);
 

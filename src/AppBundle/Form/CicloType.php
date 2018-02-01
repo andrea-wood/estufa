@@ -12,6 +12,7 @@ use AppBundle\Form\TratamentoType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
 
 class CicloType extends AbstractType
 {
@@ -23,17 +24,44 @@ class CicloType extends AbstractType
 
         $builder
         ->add('type', EntityType::class, array(
-            'label' => false,
-            'class' => 'AppBundle:Sementeira',
+            'label' => "Semente",
+            'class' => 'AppBundle:Semente',
             'choice_label' => 'name',
             'empty_data'  => null,
-            'preferred_choices' => array(null)
+            'preferred_choices' => array(null),
+            'required' => true,
+            'placeholder' => 'Tipo de semente',
+        ))
+        ->add('sementeira', EntityType::class, array(
+            'label' => "Sementeira",
+            'class' => 'AppBundle:Sementeira',
+            'choice_label' => function ($sementeira) {
+            return "[ ". $sementeira->getId() ." - " . $sementeira->getType()->getName() . "] Plantada " . $sementeira->getCreatedAt()->format("d/m/Y - H:i") ;
+            },
+            'empty_data'  => null,
+            'preferred_choices' => array(null),
+            'required' => false,
+            'placeholder' => 'Sementeira',
         ))
         ->add('isActive', HiddenType::class, array(
             'data' => 1,
         ));
 
-        // $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+
+             $ciclo = $event->getData();
+            
+            if(null !== $ciclo->getSementeira()){
+                
+                $ciclo->getSementeira()->setEndedAt((new \DateTime()));
+               
+            }
+            
+//             if(null !== $ciclo->getSementeira()){
+                
+//                 $ciclo->setType($ciclo->getSementeira()->getType());
+//             }
+           
         //     if (null != $event->getData()) {
 
         //         $ciclo = $event->getData();
@@ -68,7 +96,7 @@ class CicloType extends AbstractType
         //         }
 
         //     }
-        // });
+        });
 
     }
     

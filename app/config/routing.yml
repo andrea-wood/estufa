@@ -59,6 +59,20 @@ sementes:
     path: /sementes
     defaults:  { _controller: AppBundle:Default:sementes }
 
+    
+add_sementeira:
+    path: /sementeira/add
+    defaults:  { _controller: AppBundle:Default:addSementeira }
+       
+          
+sementeiras:
+    path: /sementeiras
+    defaults:  { _controller: AppBundle:Default:sementeiras }
+    
+sementeira:
+    path: /sementeira/{id}
+    defaults:  { _controller: AppBundle:Default:sementeira }
+
 add_semente:
     path: /semente/add
     defaults:  { _controller: AppBundle:Default:addSemente }

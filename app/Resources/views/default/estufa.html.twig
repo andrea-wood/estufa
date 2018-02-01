@@ -26,8 +26,28 @@
 				      		<ul>
 			        			{% for ciclo in mesa.ciclos %}
 			      					{% if ciclo.isActive  %}
-			      						<li><b>Sementeira</b></li>
-			      						<ul><li>{{ ciclo.type.name }}</li></ul>
+		      							<li><b>Sementeira</b></li>
+			      						<ul>
+			      							<li>
+			      							{% if ciclo.sementeira is not null  %}
+			      								{{ ciclo.sementeira.createdAt|date("d/m/Y") }}
+			      							{% else  %}
+			      								-
+			      							{% endif  %}
+			      							</li>
+			      						</ul>
+			      						<li><b>Plantaçao</b></li>
+			      						<ul>
+			      							<li>
+                                                {{ ciclo.createdAt|date("d/m/Y") }}
+			      							</li>
+			      						</ul>
+			      						<li><b>Sementes</b></li>
+			      						<ul>
+			      							<li>
+			      								{{ ciclo.type.name }}
+			      							</li>
+			      						</ul>
 			      					{% endif %}
 		  						{% endfor  %}
 			        			{% for ciclo in mesa.ciclos %}

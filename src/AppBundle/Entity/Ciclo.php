@@ -323,4 +323,35 @@ class Ciclo
     }
 
     
+    /**
+     * @var \AppBundle\Entity\Sementeira
+     */
+    private $sementeira;
+
+
+    /**
+     * Set sementeira
+     *
+     * @param \AppBundle\Entity\Sementeira $sementeira
+     *
+     * @return Ciclo
+     */
+    public function setSementeira(\AppBundle\Entity\Sementeira $sementeira = null)
+    {
+        $sementeira->setCiclo($this);
+        
+        $this->sementeira = $sementeira;
+
+        return $this;
+    }
+
+    /**
+     * Get sementeira
+     *
+     * @return \AppBundle\Entity\Sementeira
+     */
+    public function getSementeira()
+    {
+        return $this->sementeira;
+    }
 }

@@ -83,7 +83,7 @@ class TanquesNutrientes
     /**
      * @var integer
      */
-    private $kg;
+    private $kg = 0;
 
 
     /**

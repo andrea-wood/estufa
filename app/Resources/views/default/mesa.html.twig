@@ -14,8 +14,9 @@
       {% if ciclo.isActive  %}
       <div class="jumbotron">
         <ul class="list-unstyled">
-          <li><h3>Tipo: {{ ciclo.type.name|upper }}</h3></li>
-          <li><h3>Sementeira: {{ ciclo.createdAt|date("d/m/Y") }}</h3></li>
+          <li><h3>Sementes: {{ ciclo.type.name|upper }}</h3></li>
+          <li><h3>Sementeira: {% if ciclo.sementeira is not null  %} {{ ciclo.sementeira.createdAt|date("d/m/Y") }} {% else %} - {% endif %}</h3></li>
+          <li><h3>Plantação: {{ ciclo.createdAt|date("d/m/Y") }}</h3></li>
           <li role="separator" class="divider"></li>
           <li><h3>Tratamentos: </h3>
             {% if ciclo.tratamentos is not empty %}
@@ -137,6 +138,9 @@
           $("#appbundle_mesa_close").on("click", function(e){
               e.preventDefault();
           });
+
+          
+
       });
 
       function addTratamentoForm($collectionHolderTratamentos, $newTratamentoLinkLi) {

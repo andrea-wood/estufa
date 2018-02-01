@@ -1,7 +1,7 @@
-sudo chown -R admin:http var/cache/
-sudo chmod 775 -R var/cache/
-sudo chown -R http:http var/sessions/
-sudo chmod 775 -R var/sessions/
-sudo chown -R admin:http var/logs/
-sudo chmod 775 -R var/logs/
+rm -rf var/cache/*
+rm -rf var/logs/*
 
+HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1)
+
+sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
+sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
