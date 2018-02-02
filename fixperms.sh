@@ -1,3 +1,4 @@
+#!/bin/sh
 rm -rf var/cache/*
 rm -rf var/logs/*
 
