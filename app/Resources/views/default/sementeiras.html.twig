@@ -22,7 +22,7 @@
                 <td>{{ sementeira.type.name }}</td>
                 <td>{{ sementeira.createdAt|localizeddate('none', 'none', null, "Europe/Lisbon", "MMMM y")|capitalize }}</td>
                 <td>{{ sementeira.createdAt|date("d/m/Y - H:i") }}</td>
-                <td><a href="{{ path('semente', {'id': sementeira.id }) }}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+                <td><a href="{{ path('sementeira', {'id': sementeira.id }) }}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
               </tr> 
             {% endfor %}
           </tbody>
