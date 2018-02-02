@@ -171,4 +171,33 @@ class Sementeira
     {
         return $this->ciclo;
     }
+    /**
+     * @var \DateTime
+     */
+    private $endedAt;
+
+
+    /**
+     * Set endedAt
+     *
+     * @param \DateTime $endedAt
+     *
+     * @return Sementeira
+     */
+    public function setEndedAt($endedAt)
+    {
+        $this->endedAt = $endedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get endedAt
+     *
+     * @return \DateTime
+     */
+    public function getEndedAt()
+    {
+        return $this->endedAt;
+    }
 }
