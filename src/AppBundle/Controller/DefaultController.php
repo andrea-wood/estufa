@@ -569,21 +569,12 @@ class DefaultController extends Controller
 
         }
         
-    
         
         $form = $this->createForm(MesaType::class, $mesa);
 
-        $form2 = $this->createForm(MesaInfoType::class, $mesa);
 
         $form->handleRequest($request);
 
-        $form2->handleRequest($request);
-
-        if ($form2->isSubmitted() && $form2->isValid()) {
-
-            $em->persist($mesa);
-            $em->flush();
-        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             
@@ -635,7 +626,6 @@ class DefaultController extends Controller
 
         return $this->render('default/mesa.html.twig', array(
             'form' => $form->createView(),
-            'form2' => $form2->createView(),
             'mesa' => $mesa
         ));
     }

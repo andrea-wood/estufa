@@ -72,8 +72,7 @@ class MesaType extends AbstractType
                         'Espera' => 1,
                         'Produtos' => 2
                     ),
-                ))
-                ->add('ciclo', CicloDateType::class, array('label' => 'Data de plantação'));
+                ));
 
                 if($mesa->getStatus() === 1){
 
