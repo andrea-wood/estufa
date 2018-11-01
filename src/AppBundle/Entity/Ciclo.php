@@ -48,6 +48,9 @@ class Ciclo
     public function __construct()
     {
         $this->tratamentos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
+        
+        
     }
 
     /**

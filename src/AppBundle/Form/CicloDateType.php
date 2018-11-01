@@ -28,17 +28,6 @@ class CicloDateType extends AbstractType
             'widget' => 'single_text',
             // this is actually the default format for single_text
             'format' => 'dd-MM-yyyy',
-        ))
-        ->add('sementeira', EntityType::class, array(
-            'label' => "Alterar a sementeira",
-            'class' => 'AppBundle:Sementeira',
-            'choice_label' => function ($sementeira) {
-            return "[ ". $sementeira->getId() ." - " . $sementeira->getType()->getName() . "] Plantada " . $sementeira->getCreatedAt()->format("d/m/Y - H:i") ;
-            },
-            'empty_data'  => null,
-            'preferred_choices' => array(null),
-            'required' => false,
-            'placeholder' => 'Sementeira',
         ));
 
     }

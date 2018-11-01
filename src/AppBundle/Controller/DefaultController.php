@@ -581,7 +581,6 @@ class DefaultController extends Controller
             if($form->has('create')){  
 
                 if($form->get('create')->isClicked()){
-                    $mesa->getCiclo()->setCreatedAt(new \DateTime());
                     $mesa->addCiclo($mesa->getCiclo());
 
                     $mesa->setStatus(1);
