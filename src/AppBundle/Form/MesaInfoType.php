@@ -25,7 +25,7 @@ class MesaInfoType extends AbstractType
 
         $builder
         ->add('ciclo', CicloDateType::class, array('label' => 'Plantação:'))
-        >add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'));
+        ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'));
 
   
     }
