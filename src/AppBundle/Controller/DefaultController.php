@@ -613,12 +613,12 @@ class DefaultController extends Controller
                     
                 }
 
-                $em->flush();
+                
 
             }
             
             //dump($mesa);exit;
-
+            $em->flush();
             
 
             return $this->redirect($request->getUri());
