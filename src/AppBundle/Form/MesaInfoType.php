@@ -45,7 +45,7 @@ class MesaInfoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_mesa';
+        return 'appbundle_mesa_info';
     }
 
 

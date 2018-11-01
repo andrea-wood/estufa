@@ -50,7 +50,7 @@ class CicloDateType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_ciclo';
+        return 'appbundle_ciclo_date';
     }
 
 
