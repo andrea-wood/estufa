@@ -22,15 +22,11 @@ class CicloDateType extends AbstractType
     {
 
         $builder
-       ->add('createdAt', DateType::class, array(
-            'label' => false,
+        ->add('createdAt', DateType::class, array(
+            'label' => "Alterar a data de plantação",
             'widget' => 'single_text',
-
-            // prevents rendering it as type="date", to avoid HTML5 date pickers
-            'html5' => false,
-        
-            // adds a class that can be selected in JavaScript
-            'attr' => ['class' => 'js-datepicker'],
+            // this is actually the default format for single_text
+            'format' => 'dd-MM-yyyy',
         ));
 
     }

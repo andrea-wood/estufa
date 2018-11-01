@@ -74,7 +74,13 @@ class MesaType extends AbstractType
                     ),
                 ));
 
-                if($mesa->getStatus() === 1){
+                if($mesa->getStatus() === 0){
+
+                    $form
+                    ->add('ciclo', CicloDateType::class, array('label' => '***'));
+
+
+                } elseif($mesa->getStatus() === 1){
 
                     $form
                     ->add('ciclo', CicloColheitasType::class, array('label' => '***'));
