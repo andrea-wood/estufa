@@ -52,5 +52,5 @@ AppBundle\Entity\Ciclo:
         mappedBy: ciclo
         
     lifecycleCallbacks:
-        prePersist: [ setCreatedAt,setUpdatedAt, setInitialEndedAt]
+        prePersist: [ setUpdatedAt, setInitialEndedAt]
         preUpdate: [ setUpdatedAt ]

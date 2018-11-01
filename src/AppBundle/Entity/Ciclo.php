@@ -69,7 +69,7 @@ class Ciclo
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = (new \DateTime());
+        $this->createdAt = $createdAt;
 
         return $this;
     }
