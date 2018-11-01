@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use AppBundle\Form\ColheitaType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class CicloColheitasType extends AbstractType
 {
@@ -20,7 +21,7 @@ class CicloColheitasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder
+        $builder 
        ->add('colheitas', CollectionType::class, array(
             'label' => "Colheita",
             'entry_type'   => ColheitaType::class,
