@@ -77,13 +77,13 @@ class MesaType extends AbstractType
                 if($mesa->getStatus() === 1){
 
                     $form
-                    ->add('ciclo', CicloColheitasType::class, array('label' => 'COLHEITAS'));
+                    ->add('ciclo', CicloColheitasType::class, array('label' => '***'));
 
 
                 } elseif($mesa->getStatus() === 2){
 
                     $form
-                    ->add('ciclo', CicloTratamentosType::class, array('label' => 'TRATAMENTOS'));
+                    ->add('ciclo', CicloTratamentosType::class, array('label' => '***'));
 
                 }
                 
