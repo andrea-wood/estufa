@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Mesa;
 use AppBundle\Form\MesaType;
+use AppBundle\Form\MesaInfoType;
 use AppBundle\Form\ProdutoType;
 use AppBundle\Entity\Produto;
 use AppBundle\Entity\Semente;
@@ -572,7 +573,17 @@ class DefaultController extends Controller
         
         $form = $this->createForm(MesaType::class, $mesa);
 
+        $form2 = $this->createForm(MesaInfoType::class, $mesa);
+
         $form->handleRequest($request);
+
+        $form2->handleRequest($request);
+
+        if ($form2->isSubmitted() && $form2->isValid()) {
+
+            $em->persist($mesa);
+            $em->flush();
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             
@@ -611,17 +622,20 @@ class DefaultController extends Controller
                     
                 }
 
+                $em->flush();
+
             }
             
             //dump($mesa);exit;
 
-            $em->flush();
+            
 
             return $this->redirect($request->getUri());
         }
 
         return $this->render('default/mesa.html.twig', array(
             'form' => $form->createView(),
+            'form2' => $form2->createView(),
             'mesa' => $mesa
         ));
     }
