@@ -30,7 +30,7 @@
            {% endif %}
            </li>
            <li role="separator" class="divider"></li>
-          <li><h3>XColheitas: </h3>
+          <li><h3>Colheitas: </h3>
             {% if ciclo.colheitas is not empty %}
             <ul>
               {% for colheita in ciclo.colheitas %}
@@ -39,10 +39,6 @@
               </li>
               {% endfor %}
             </ul>
-            
-            {{ form_start(form2) }}
-            {{ form_widget(form2) }}
-            {{ form_rest(form2) }}
            {% endif %}
            </li>
         </ul>
