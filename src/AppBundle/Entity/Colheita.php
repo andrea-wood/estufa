@@ -24,6 +24,15 @@ class Colheita
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+
+        $this->createdAt = new \DateTime();
+                
+    }
+    /**
      * Get id
      *
      * @return int
@@ -42,7 +51,7 @@ class Colheita
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = (new \DateTime());
+        $this->createdAt = $createdAt;
 
         return $this;
     }
