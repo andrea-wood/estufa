@@ -33,7 +33,7 @@ class CicloType extends AbstractType
             'placeholder' => 'Tipo de semente',
         ))
         ->add('sementeira', EntityType::class, array(
-            'label' => "Sementeira",
+            'label' => "Tabuleiro",
             'class' => 'AppBundle:Sementeira',
             'choice_label' => function ($sementeira) {
             return "[ ". $sementeira->getId() ." - " . $sementeira->getType()->getName() . "] Plantada " . $sementeira->getCreatedAt()->format("d/m/Y - H:i") ;
@@ -41,7 +41,7 @@ class CicloType extends AbstractType
             'empty_data'  => null,
             'preferred_choices' => array(null),
             'required' => false,
-            'placeholder' => 'Sementeira',
+            'placeholder' => 'Tabuleiro',
         ))
         ->add('isActive', HiddenType::class, array(
             'data' => 1,

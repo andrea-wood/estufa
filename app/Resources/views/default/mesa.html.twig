@@ -15,7 +15,7 @@
       <div class="jumbotron">
         <ul class="list-unstyled">
           <li><h3>Sementes: {{ ciclo.type.name|upper }}</h3></li>
-          <li><h3>Sementeira: {% if ciclo.sementeira is not null  %} {{ ciclo.sementeira.createdAt|date("d/m/Y") }} {% else %} - {% endif %}</h3></li>
+          <li><h3>Tabuleiro: {% if ciclo.sementeira is not null  %} {{ ciclo.sementeira.createdAt|date("d/m/Y") }} {% else %} - {% endif %}</h3></li>
           <li><h3>Plantação: {{ ciclo.createdAt|date("d/m/Y") }}</h3></li>
           <li role="separator" class="divider"></li>
           <li><h3>Produtos: </h3>
