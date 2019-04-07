@@ -49,7 +49,7 @@ class DefaultController extends Controller
                 }
             }
             $em->persist($mesa);
-            dumo($mesa);
+            dump($mesa);
            
         }
         $em->flush();
