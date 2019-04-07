@@ -16,7 +16,7 @@
 				    <div class="panel-heading" role="tab" id="heading{{mesa.id}}">
 				      <h4 class="panel-title">
 				        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{mesa.id}}" aria-expanded="true" aria-controls="collapseOne">
-				         {{ mesa.name }}
+				         {{ mesa.type }}{{ mesa.name }}
 				        </a>
 				      </h4>
 				    </div>
@@ -64,10 +64,12 @@
 			        			{% for ciclo in mesa.ciclos %}
 			      					{% if ciclo.isActive  %}
 			      					 <li><b>Colheitas</b></li>
+											 {% set totColheita = 0 %}
 		        						<ul>
-			      						{% for colheita in ciclo.colheitas %}
-			      							<li><b>{{ colheita.kg }} Quilos ( {{ colheita.createdAt|date("d/m/Y") }} )</b></li>
-			      						{% endfor  %}
+      										{% for colheita in ciclo.colheitas %}
+														{% set totColheita = totColheita + colheita.kg %}
+			      							{% endfor  %}
+													<li><b>Total Colheitas : {{ totColheita }} KG</b></li>
 			      						</ul>
 			      					{% endif %}
 		  						{% endfor  %}	

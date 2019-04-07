@@ -42,7 +42,7 @@ class DefaultController extends Controller
         $mesas = $this->getDoctrine()
         ->getRepository(Mesa::class)
         ->findBy(array('type' => $type), array('status' => 'DESC'));
-   
+        
          return $this->render('default/estufa.html.twig', array(
             'mesas' => $mesas,
             'type' => $type

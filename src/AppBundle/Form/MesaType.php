@@ -73,9 +73,9 @@ class MesaType extends AbstractType
                 ->add('status', ChoiceType::class, array(
                     'label' => 'Estado',
                     'choices' => array(
-                        'Vazia' => 0, 
-                        'Espera' => 1,
-                        'Produtos' => 2
+                        'Inativa' => 0, 
+                        'Ativa' => 1,
+                        'Tratamentos' => 2
                     ),
                 ));
 

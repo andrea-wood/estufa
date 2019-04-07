@@ -18,7 +18,7 @@
           <li><h3>Sementeira: {% if ciclo.sementeira is not null  %} {{ ciclo.sementeira.createdAt|date("d/m/Y") }} {% else %} - {% endif %}</h3></li>
           <li><h3>Plantação: {{ ciclo.createdAt|date("d/m/Y") }}</h3></li>
           <li role="separator" class="divider"></li>
-          <li><h3>Tratamentos: </h3>
+          <li><h3>Produtos: </h3>
             {% if ciclo.tratamentos is not empty %}
             <ul>
               {% for tratamento in ciclo.tratamentos %}
@@ -48,24 +48,11 @@
       {% endif %}
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-      <h3>Acçóes:</h3>
+      <h3>Ações:</h3>
       {{ form_start(form) }}
       {{ form_widget(form) }}
       {{ form_rest(form) }}
       </div>
-      {% if mesa.ciclos is not empty %}
-
-      <div class="jumbotron">
-          <h3>Velhos Ciclos:</h3>
-          <ul>
-            {% for ciclo in mesa.ciclos %}
-                {% if ciclo.isActive == 0 %}
-                <li>{{ ciclo.type.name }} ( {{ ciclo.createdAt|date("d/m/Y - H:i") }} / {{ ciclo.updatedAt|date("d/m/Y - H:i") }} )</li>
-                {% endif %}
-            {% endfor %}
-          </ul>
-      </div>
-      {% endif %}
     </div>
 
 <div class="modal fade" id="modalCheck" tabindex="-1" role="dialog" aria-labelledby="modalCheckLabel">
