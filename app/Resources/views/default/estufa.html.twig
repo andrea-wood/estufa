@@ -23,29 +23,34 @@
 				    <div id="collapse{{mesa.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 				      <div class="panel-body">
 				      	<div class="row">
+									<h3>Actividades</h3>
 				      		<ul>
 			        			{% for ciclo in mesa.ciclos %}
 			      					{% if ciclo.isActive  %}
-		      							<li><b>Sementeira</b></li>
-			      						<ul>
-			      							<li>
-			      							{% if ciclo.sementeira is not null  %}
-			      								{{ ciclo.sementeira.createdAt|date("d/m/Y") }}
-			      							{% else  %}
-			      								-
-			      							{% endif  %}
-			      							</li>
-			      						</ul>
+												{% if ciclo.type.name is not null  %}
+													<li><b>Sementes</b></li>
+													<ul>
+														<li>
+															{{ ciclo.type.name }}
+														</li>
+													</ul>
+												{% endif  %}
+												{% if ciclo.sementeira is not null  %}
+													<li><b>Sementeira</b></li>
+													<ul>
+														<li>
+														{% if ciclo.sementeira is not null  %}
+															{{ ciclo.sementeira.createdAt|date("d/m/Y") }}
+														{% else  %}
+															-
+														{% endif  %}
+														</li>
+													</ul>
+												{% endif  %}
 			      						<li><b>Plantaçao</b></li>
 			      						<ul>
 			      							<li>
                                                 {{ ciclo.createdAt|date("d/m/Y") }}
-			      							</li>
-			      						</ul>
-			      						<li><b>Sementes</b></li>
-			      						<ul>
-			      							<li>
-			      								{{ ciclo.type.name }}
 			      							</li>
 			      						</ul>
 			      					{% endif %}
@@ -69,7 +74,7 @@
       										{% for colheita in ciclo.colheitas %}
 														{% set totColheita = totColheita + colheita.kg %}
 			      							{% endfor  %}
-													<li><b>Total Colheitas : {{ totColheita }} KG</b></li>
+													<li>Total Colheitas : {{ totColheita }} KG</li>
 			      						</ul>
 			      					{% endif %}
 		  						{% endfor  %}	
