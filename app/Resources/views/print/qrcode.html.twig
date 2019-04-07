@@ -15,7 +15,7 @@
     <body>
           <page size="A4">
             <div class="row text-center">
-              <h1>Estufa da {{ mesa.type }}{{ mesa.name}}</h1>
+              <h1>Estufa {{ mesa.type }}{{ mesa.name}}</h1>
               <img src="{{ qrcode_url(absolute_url(path('mesa', {'id': mesa.id, 'type' : mesa.type|lower}))) }}" class="img-responsive" style="margin:10px auto;" />
             </div>
           </page>
