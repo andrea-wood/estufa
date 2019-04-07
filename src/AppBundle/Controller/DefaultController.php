@@ -29,31 +29,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $mesas = $this->getDoctrine()
-        ->getRepository(Mesa::class)->findAll();
-        $em = $this->getDoctrine()->getEntityManager();
-        foreach($mesas as $mesa){
-            if($mesa->getType() === "B"){
-                if($mesa->getId() < 10){
-                    $mesa->setName(str_replace("Mesa ","0",$mesa->getName()));
-                } else {
-                    $mesa->setName(str_replace("Mesa ","",$mesa->getName()));
-                }
-                
-            }
-            if($mesa->getType() === "A"){
-                if($mesa->getId() < 49){
-                    $mesa->setName(str_replace("Mesa ","0",$mesa->getName()));
-                } else {
-                    $mesa->setName(str_replace("Mesa ","",$mesa->getName()));
-                }
-            }
-            $em->persist($mesa);
-            dump($mesa);
-           
-        }
-        $em->flush();
-        exit;
+  
         
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
