@@ -91,9 +91,9 @@
 
     var $collectionHolderColheitas;
 
-    var $addTratamentoLink = $('<div class="form-class text-center"><button type="button" class="btn btn-primary add_tratamento_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um tratamento</button></div>');
+    var $addTratamentoLink = $('<div class="form-class text-center" style="padding: 20px;"><button type="button" class="btn btn-primary add_tratamento_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar um tratamento</button></div>');
 
-    var $addColheitaLink = $('<div class="form-class text-center"><button type="button" class="btn btn-primary add_colheita_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma colheita</button></div>');
+    var $addColheitaLink = $('<div class="form-class text-center" style="padding: 20px;"><button type="button" class="btn btn-primary add_colheita_link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma colheita</button></div>');
 
     var $newTratamentoLinkLi = $addTratamentoLink;
 
@@ -117,7 +117,7 @@
 
           $collectionHolderColheitas = $('#appbundle_mesa_ciclo_colheitas');
          
-          $collectionHolderColheitas.append($newColheitaLinkLi);
+          $collectionHolderColheitas.prepend($newColheitaLinkLi);
 
           $collectionHolderColheitas.data('index', $collectionHolderColheitas.find(':input').length);
 
