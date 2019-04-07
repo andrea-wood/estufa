@@ -5,20 +5,25 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RequestContext;
 
 /**
+ * appProdProjectContainerUrlMatcher.
+ *
  * This class has been auto-generated
  * by the Symfony Routing Component.
  */
 class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher
 {
+    /**
+     * Constructor.
+     */
     public function __construct(RequestContext $context)
     {
         $this->context = $context;
     }
 
-    public function match($rawPathinfo)
+    public function match($pathinfo)
     {
         $allow = array();
-        $pathinfo = rawurldecode($rawPathinfo);
+        $pathinfo = rawurldecode($pathinfo);
         $trimmedPathinfo = rtrim($pathinfo, '/');
         $context = $this->context;
         $request = $this->request;
@@ -87,7 +92,7 @@ class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\R
         // homepage
         if ('' === $trimmedPathinfo) {
             if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($rawPathinfo.'/', 'homepage');
+                return $this->redirect($pathinfo.'/', 'homepage');
             }
 
             return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
@@ -199,20 +204,33 @@ class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\R
 
         }
 
-        // qrcode
-        if ('/qrcode/list' === $pathinfo) {
-            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::qrcodeListAction',  '_route' => 'qrcode',);
-        }
-
-        if (0 === strpos($pathinfo, '/qrcode/print')) {
-            // qrc_print_all
-            if ('/qrcode/print/all' === $pathinfo) {
-                return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::qrcPrtAllAction',  '_route' => 'qrc_print_all',);
+        elseif (0 === strpos($pathinfo, '/qrcode')) {
+            // qrcode
+            if ('/qrcode/list' === $pathinfo) {
+                return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::qrcodeListAction',  '_route' => 'qrcode',);
             }
 
-            // qrcode_print
-            if (preg_match('#^/qrcode/print/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'qrcode_print')), array (  '_controller' => 'AppBundle\\Controller\\DefaultController::qrcodePrintOneAction',));
+            if (0 === strpos($pathinfo, '/qrcode/print')) {
+                // qrc_print_all
+                if ('/qrcode/print/all' === $pathinfo) {
+                    return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::qrcPrtAllAction',  '_route' => 'qrc_print_all',);
+                }
+
+                // qrcode_print
+                if (preg_match('#^/qrcode/print/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'qrcode_print')), array (  '_controller' => 'AppBundle\\Controller\\DefaultController::qrcodePrintOneAction',));
+                }
+
+            }
+
+            // endroid_qrcode_generate
+            if (preg_match('#^/qrcode/(?P<text>[\\w\\W]+)\\.(?P<extension>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'endroid_qrcode_generate')), array (  '_controller' => 'Endroid\\QrCode\\Bundle\\QrCodeBundle\\Controller\\QrCodeController::generateAction',));
+            }
+
+            // endroid_qrcode_twig_functions
+            if ('/qrcode/twig' === $pathinfo) {
+                return array (  '_controller' => 'Endroid\\QrCode\\Bundle\\QrCodeBundle\\Controller\\QrCodeController::twigFunctionsAction',  '_route' => 'endroid_qrcode_twig_functions',);
             }
 
         }

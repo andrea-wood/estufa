@@ -5,6 +5,8 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Psr\Log\LoggerInterface;
 
 /**
+ * appProdProjectContainerUrlGenerator
+ *
  * This class has been auto-generated
  * by the Symfony Routing Component.
  */
@@ -12,6 +14,9 @@ class appProdProjectContainerUrlGenerator extends Symfony\Component\Routing\Gene
 {
     private static $declaredRoutes;
 
+    /**
+     * Constructor.
+     */
     public function __construct(RequestContext $context, LoggerInterface $logger = null)
     {
         $this->context = $context;
@@ -48,6 +53,8 @@ class appProdProjectContainerUrlGenerator extends Symfony\Component\Routing\Gene
         'qrcode' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'AppBundle\\Controller\\DefaultController::qrcodeListAction',  ),  2 =>   array (  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/qrcode/list',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
         'qrc_print_all' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'AppBundle\\Controller\\DefaultController::qrcPrtAllAction',  ),  2 =>   array (  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/qrcode/print/all',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
         'qrcode_print' => array (  0 =>   array (    0 => 'id',  ),  1 =>   array (    '_controller' => 'AppBundle\\Controller\\DefaultController::qrcodePrintOneAction',  ),  2 =>   array (  ),  3 =>   array (    0 =>     array (      0 => 'variable',      1 => '/',      2 => '[^/]++',      3 => 'id',    ),    1 =>     array (      0 => 'text',      1 => '/qrcode/print',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
+        'endroid_qrcode_generate' => array (  0 =>   array (    0 => 'text',    1 => 'extension',  ),  1 =>   array (    '_controller' => 'Endroid\\QrCode\\Bundle\\QrCodeBundle\\Controller\\QrCodeController::generateAction',  ),  2 =>   array (    'text' => '[\\w\\W]+',  ),  3 =>   array (    0 =>     array (      0 => 'variable',      1 => '.',      2 => '[^/]++',      3 => 'extension',    ),    1 =>     array (      0 => 'variable',      1 => '/',      2 => '[\\w\\W]+',      3 => 'text',    ),    2 =>     array (      0 => 'text',      1 => '/qrcode',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
+        'endroid_qrcode_twig_functions' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'Endroid\\QrCode\\Bundle\\QrCodeBundle\\Controller\\QrCodeController::twigFunctionsAction',  ),  2 =>   array (  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/qrcode/twig',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
     );
         }
     }
