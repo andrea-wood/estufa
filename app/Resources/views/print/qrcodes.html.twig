@@ -19,12 +19,12 @@
         {% if index % 2 == 0 and counter == 0 %}
           <page size="A4">
         {% endif %}
-        <div class="row text-center">
-          <div style="width:15cm;height:10cm;border:dotted 2px green;">
-            <h1 style="padding: 0;">  {{ mesa.type }}{{ mesa.name}}</h1>
-            <img src="{{ qrcode_url(absolute_url(path('mesa', {'id': mesa.id, 'type' : mesa.type|lower}))) }}" class="img-responsive" style="argin: -5px auto;" />
-          </div>
-        </div>
+            <div class="row text-center">
+              <div style="width:15cm;height:10cm;border:dotted 2px green;margin:10px auto;">
+                <h1 style="padding: 0;">  {{ mesa.type }}{{ mesa.name}}</h1>
+                <img src="{{ qrcode_url(absolute_url(path('mesa', {'id': mesa.id, 'type' : mesa.type|lower}))) }}" class="img-responsive" style="margin: -5px auto;" />
+              </div>
+            </div>
         {% set counter =  counter  + 1 %}  
         {% if counter == 2 %}   
           {% set counter =  0 %}  
