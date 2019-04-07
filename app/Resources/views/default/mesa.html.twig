@@ -2,12 +2,12 @@
 {% block body %}
     <ol class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Home</a></li>
-      <li><a href="{{ path('estufa', { 'type' : mesa.type|lower }) }}">Estufa da {{ mesa.type }}</a></li>
+      <li><a href="{{ path('estufa', { 'type' : mesa.type|lower }) }}">Estufa {{ mesa.type }}</a></li>
       <li class="active">{{ mesa.name}}</li>
     </ol>
     
     <div class="content">
-  		<h3>Estufa da {{ mesa.type }} - {{ mesa.name}}</h3>
+  		<h3>Estufa {{ mesa.type }}{{ mesa.name}}</h3>
   		<hr>
       {% if mesa.ciclos is not empty %}
       {% for ciclo in mesa.ciclos %}
