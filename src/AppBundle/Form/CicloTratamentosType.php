@@ -30,7 +30,7 @@ class CicloTratamentosType extends AbstractType
             'format' => 'dd-MM-yyyy',
         ))
        ->add('tratamentos', CollectionType::class, array(
-            'label' => "Tratamento",
+            'label' => "Produtos",
             'entry_type'   => TratamentoType::class,
             'allow_add'    => true,
             'by_reference' => false,

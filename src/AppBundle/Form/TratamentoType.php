@@ -39,7 +39,7 @@ class TratamentoType extends AbstractType
             if ($tratamento instanceof Tratamento) {
                 $form
                 ->add('createdAt', DateType::class, array(
-                    'label' => "Alterar a data do tratamento",
+                    'label' => "Alterar a data do produto",
                     'widget' => 'single_text',
                     // this is actually the default format for single_text
                     'format' => 'dd-MM-yyyy',
