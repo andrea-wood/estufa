@@ -66,9 +66,9 @@ class MesaType extends AbstractType
 
                 $form
 
-                ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'));
+                ->add('save', SubmitType::class, array('attr' => array('class' => 'btn-success'), 'label' => 'Salvar'))
 
-                ->add('close', SubmitType::class, array('attr' => array('class' => 'btn-danger', 'data-toggle' => 'modal', 'data-target' => '#modalCheck'), 'label' => 'Acabar o ciclo'));
+                ->add('close', SubmitType::class, array('attr' => array('class' => 'btn-danger', 'data-toggle' => 'modal', 'data-target' => '#modalCheck'), 'label' => 'Acabar o ciclo'))
 
                 ->add('status', ChoiceType::class, array(
                     'label' => 'Estado',
