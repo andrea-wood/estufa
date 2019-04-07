@@ -29,22 +29,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $mesas = $this->getDoctrine()
-        ->getRepository(Mesa::class)->findAll();
-        $em = $this->getDoctrine()->getEntityManager();
-        foreach($mesas as $mesa){
-            if($mesa->getType() === "catarina"){
-                $mesa->setType("B");
-            }
-            if($mesa->getType() === "ana"){
-                $mesa->setType("A");
-            }
-            $em->persist($mesa);
-
-           
-        }
-        $em->flush();
-        exit;
         
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
